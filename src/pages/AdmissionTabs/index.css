@@ -1,0 +1,56 @@
+:root {
+  --primary: rgb(16 55 92);
+  --secondary: #F9A825;
+  --bg: #F5F7FA;
+  --text: #212121;
+  --text-light: #616161;
+  --font-main: 'Essonnes', sans-serif;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+ion-card {
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background-color: white;
+}
+
+.disabled-tab {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.tab-bar {
+  --background: cadetblue;
+  --color: white;
+}
+
+.tab-selected {
+  --background: white;
+  color: cadetblue;
+}
+
+.ion-padding {
+  --background: #c2ddde;
+}

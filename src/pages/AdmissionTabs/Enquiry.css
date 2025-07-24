@@ -1,0 +1,19 @@
+.select-item {
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  --background: #f8f9fa;
+  --border-radius: 12px;
+  margin: 12px 0;
+}
+
+.select-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.select-input {
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-size: 16px;
+}

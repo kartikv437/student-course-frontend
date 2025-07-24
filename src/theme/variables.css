@@ -1,0 +1,14 @@
+/* For information on how to create your own theme, please see:
+http://ionicframework.com/docs/theming/ */
+/* Light Theme - default */
+:root {
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+  /* Add more variables as needed */
+}
+
+/* Dark Theme */
+body.dark {
+  --ion-background-color: #121212;
+  --ion-text-color: #ffffff;
+}
