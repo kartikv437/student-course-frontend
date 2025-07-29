@@ -1,8 +1,9 @@
-import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonInput, IonGrid, IonRow, IonCol, IonButton, IonSelect, IonSelectOption, IonToast } from "@ionic/react";
+import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonInput, IonGrid, IonRow, IonCol, IonButton, IonSelect, IonSelectOption, IonToast, IonLoading } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import Header from "../../components/Header";
 import { useToast } from "../../context/ToastContext";
+import { submitApplication } from "../../api";
 
 const Enquiry: React.FC = () => {
     // Form states
@@ -11,6 +12,7 @@ const Enquiry: React.FC = () => {
     const [sex, setSex] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [loading, setLoading] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
     const history = useHistory();
     const { showToast } = useToast();
@@ -20,42 +22,27 @@ const Enquiry: React.FC = () => {
             showToast("Please fill all Mandatory fields.", "danger");
             return;
         }
-
+        setLoading(true);
         try {
-            const response: any = await fetch("https://studentapp-node-backend.onrender.com/submit-application", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    fullName: name,
-                    dateOfBirth: dob,
-                    email: email,
-                    phoneNumber: phone,
-                    gender: sex,
-                }),
-            }).then((res: any) => {
-                if (res['status'] === 'success') {
-                    // Handle success
-                    setSaveSuccess(true);
-                    showToast("Application submitted successfully", "success");
-                } else {
-                    showToast("Error submitting application", "danger");
-                }
-            }).catch((error: any) => {
-                console.error("Error submitting application:", error);
-                showToast("Error submitting application", "danger");
-            });
+          const response: any = await submitApplication(JSON.stringify({
+                fullName: name,
+                dateOfBirth: dob,
+                email: email,
+                phoneNumber: phone,
+                gender: sex,
+            }));
 
-            if (response['status'] === 'success') {
+            if (response['status'] === 201) {
+                setLoading(false);
                 setSaveSuccess(true);
                 showToast("Application submitted successfully", "success");
             } else {
                 showToast("Error submitting application", "danger");
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -131,6 +118,12 @@ const Enquiry: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
+
+                <IonLoading
+                    isOpen={loading}
+                    message={'Please wait...'}
+                    spinner="crescent"
+                />
 
             </IonContent>
 

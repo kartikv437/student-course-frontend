@@ -49,6 +49,9 @@ import HomeTabs from './pages/HomeTabs';
 import AdmissionTabs from './pages/AdmissionTabs';
 import { useState, useEffect } from 'react';
 import SideMenu from './components/SideMenu';
+import SignupPage from './pages/SignupPage';
+import VerifyOtpPage from './pages/VerifyOtpPage';
+import LoginPage from './pages/LoginPage';
 
 setupIonicReact();
 
@@ -68,9 +71,12 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main-content">
-
           <SideMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           <IonRouterOutlet id="main-content">
+            <Route path="/" component={HomeTabs} />
+            <Route path="/signup" component={SignupPage} />
+            <Route path="/verify-otp" component={VerifyOtpPage} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/home" component={HomeTabs} />
             <Route path="/admission" component={AdmissionTabs} />
             <Redirect exact from="/" to="/home" />

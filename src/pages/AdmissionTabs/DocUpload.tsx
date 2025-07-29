@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './DocUpload.css';
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import { loadStripe } from "@stripe/stripe-js";
-import { cloudUploadOutline, documentAttach, documentsOutline, fileTray } from 'ionicons/icons';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import { useHistory } from 'react-router';
 import Header from '../../components/Header';
 import { useToast } from '../../context/ToastContext';
+import { uploadDocuments } from '../../api';
 
 const DocUpload: React.FC = (name) => {
     const { showToast } = useToast();
+    const [loading, setLoading] = useState(false);
+
     const [file, setFile] = useState<{ [key: string]: File | null }>({
         aadhar: null,
         tenth: null,
@@ -44,19 +44,26 @@ const DocUpload: React.FC = (name) => {
                 formData.append(key, value);
             }
         });
-
+        setLoading(true);
         try {
-            const response = await axios.post('https://studentapp-node-backend.onrender.com/upload', formData);
-            setUrl(
-                {
-                    aadhar: response.data.aadhar.fileUrl,
-                    tenth: response.data.tenth.fileUrl,
-                    twelfth: response.data.twelfth.fileUrl,
-                    degree: response.data.degree.fileUrl,
-                    photo: response.data.photo.fileUrl
-                }
-            );
+            const response = await uploadDocuments(formData);
+
+            if (response.status === 200) {
+                setLoading(false);
+                setUrl(
+                    {
+                        aadhar: response.data && response.data.documents && response.data.documents.aadhar ? response.data.documents.aadhar.fileUrl : null,
+                        tenth: response.data && response.data.documents && response.data.documents.tenth ? response.data.documents.tenth.fileUrl : null,
+                        twelfth: response.data && response.data.documents && response.data.documents.twelfth ? response.data.documents.twelfth.fileUrl : null,
+                        degree: response.data && response.data.documents && response.data.documents.degree ? response.data.documents.degree.fileUrl : null,
+                        photo: response.data && response.data.documents && response.data.documents.photo ? response.data.documents.photo.fileUrl : null
+                    }
+                );
+
+                showToast("Files uploaded successfully", "success");
+            }
         } catch (err) {
+            setLoading(false);
             console.error("Upload failed", err);
             showToast("File upload failed", "danger");
         }
@@ -64,8 +71,8 @@ const DocUpload: React.FC = (name) => {
 
     const goToPassport = () => {
 
-        if (Object.values(url).some(fileUrl => !fileUrl)) {
-            showToast("Please upload all required documents", "danger");
+        if (Object.values(url).every(fileUrl => fileUrl === null)) {
+            showToast("Please upload at least one document", "danger");
             return;
         }
         history.push("/admission/passport");
@@ -171,6 +178,11 @@ const DocUpload: React.FC = (name) => {
                 {/* <IonButton expand="block" color="secondary" onClick={handleStripePayment}>
                     Pay Now
                 </IonButton> */}
+                <IonLoading
+                    isOpen={loading}
+                    message={'Please wait...'}
+                    spinner="crescent"
+                />
             </IonContent>
 
         </IonPage>
