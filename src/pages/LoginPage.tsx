@@ -12,6 +12,7 @@ import {
   IonLabel,
   IonToast,
   IonList,
+  IonLoading,
 } from '@ionic/react';
 import { useAuth } from '../auth/AuthContext';
 import { login } from '../api';
@@ -23,13 +24,16 @@ const LoginPage: React.FC = () => {
   const { loginWithToken } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ open: boolean; msg: string }>({ open: false, msg: '' });
   const passRef = useRef<HTMLIonInputElement | null>(null);
 
   const onSubmit = async () => {
     const passwordValue = passRef.current?.value as string;
+    setLoading(true);
     try {
-      const { data } = await login(email, password);
+      const { data } = await login(email, passwordValue);
+      setLoading(false);
       loginWithToken(data.token);
       localStorage.setItem('email', email); // Store email for future use
       setToast({ open: true, msg: 'Logged in!' });
@@ -82,6 +86,11 @@ const LoginPage: React.FC = () => {
           onDidDismiss={() => setToast({ open: false, msg: '' })}
         />
       </IonContent>
+      <IonLoading
+        isOpen={loading}
+        message={'Please wait...'}
+        spinner="crescent"
+      />
     </IonPage>
   );
 };

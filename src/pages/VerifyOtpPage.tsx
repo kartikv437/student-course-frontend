@@ -12,6 +12,7 @@ import {
   IonLabel,
   IonToast,
   IonList,
+  IonLoading,
 } from '@ionic/react';
 import { useHistory, useLocation } from 'react-router';
 import { useAuth } from '../auth/AuthContext';
@@ -26,14 +27,17 @@ const VerifyOtpPage: React.FC = () => {
   const emailFromState = (state as LocationState)?.email ?? '';
   const [email, setEmail] = useState(emailFromState);
   const [otp, setOtp] = useState('');
+  const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ open: boolean; msg: string }>({ open: false, msg: '' });
   const otpRef = useRef<HTMLIonInputElement | null>(null);
   const { loginWithToken } = useAuth();
 
   const onSubmit = async () => {
     const otpValue = otpRef.current?.value as string;
+    setLoading(true);
     try {
       const { data } = await verifyOtp(email, otpValue);
+      setLoading(false);
       loginWithToken(data.token);
       setToast({ open: true, msg: 'Verified!' });
       history.replace('/home');
@@ -79,6 +83,11 @@ const VerifyOtpPage: React.FC = () => {
           message={toast.msg}
           duration={2000}
           onDidDismiss={() => setToast({ open: false, msg: '' })}
+        />
+        <IonLoading
+          isOpen={loading}
+          message={'Please wait...'}
+          spinner="crescent"
         />
       </IonContent>
     </IonPage>
