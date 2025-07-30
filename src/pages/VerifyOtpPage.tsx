@@ -1,5 +1,4 @@
-// src/pages/VerifyOtpPage.tsx
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -10,39 +9,68 @@ import {
   IonButton,
   IonItem,
   IonLabel,
-  IonToast,
   IonList,
   IonLoading,
 } from '@ionic/react';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { useAuth } from '../auth/AuthContext';
-import { verifyOtp } from '../api';
-
-
-type LocationState = { email?: string };
+import { resendOtp, verifyOtp } from '../api';
+import { useToast } from '../context/ToastContext';
 
 const VerifyOtpPage: React.FC = () => {
   const history = useHistory();
-  const { state } = useLocation();
-  const emailFromState = (state as LocationState)?.email ?? '';
-  const [email, setEmail] = useState(emailFromState);
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<{ open: boolean; msg: string }>({ open: false, msg: '' });
+  const [cooldown, setCooldown] = useState(0);
+  const { showToast } = useToast();
   const otpRef = useRef<HTMLIonInputElement | null>(null);
   const { loginWithToken } = useAuth();
+
+  const email = localStorage.getItem("email");
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldown > 0) {
+      timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [cooldown]);
 
   const onSubmit = async () => {
     const otpValue = otpRef.current?.value as string;
     setLoading(true);
     try {
-      const { data } = await verifyOtp(email, otpValue);
-      setLoading(false);
-      loginWithToken(data.token);
-      setToast({ open: true, msg: 'Verified!' });
-      history.replace('/home');
+      const res = await verifyOtp(otpValue);
+      if (res.status === 200) {
+        setLoading(false);
+        loginWithToken(res.data.result.accessToken);
+        showToast(res.data.message, "success")
+        history.replace('/home');
+      } else {
+        setLoading(false);
+        showToast(res.data.message, "danger");
+      }
     } catch (e: any) {
-      setToast({ open: true, msg: e?.response?.data?.message || 'Verification failed' });
+      setLoading(false);
+      showToast(e?.response?.data?.message || 'OTP verification failed', "danger");
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (!email) {
+      showToast('Email not found in localStorage', 'danger');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await resendOtp(email);
+      setLoading(false);
+      setCooldown(60); // Set cooldown to 60 seconds
+      showToast(res.data?.message || 'OTP resent successfully', 'success');
+    } catch (e: any) {
+      setLoading(false);
+      showToast(e?.response?.data?.message || 'Failed to resend OTP', 'danger');
     }
   };
 
@@ -59,8 +87,8 @@ const VerifyOtpPage: React.FC = () => {
             <IonLabel position="stacked">Email</IonLabel>
             <IonInput
               type="email"
+              disabled
               value={email}
-              onIonChange={(e) => setEmail(e.detail.value!)}
             />
           </IonItem>
           <IonItem>
@@ -78,12 +106,15 @@ const VerifyOtpPage: React.FC = () => {
           Verify
         </IonButton>
 
-        <IonToast
-          isOpen={toast.open}
-          message={toast.msg}
-          duration={2000}
-          onDidDismiss={() => setToast({ open: false, msg: '' })}
-        />
+        <IonButton
+          expand="block"
+          fill="outline"
+          onClick={handleResendOtp}
+          disabled={cooldown > 0}
+        >
+          {cooldown > 0 ? `Resend OTP (${cooldown}s)` : 'Resend OTP'}
+        </IonButton>
+
         <IonLoading
           isOpen={loading}
           message={'Please wait...'}

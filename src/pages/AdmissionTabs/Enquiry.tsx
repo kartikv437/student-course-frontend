@@ -6,7 +6,6 @@ import { useToast } from "../../context/ToastContext";
 import { submitApplication } from "../../api";
 
 const Enquiry: React.FC = () => {
-    // Form states
     const [name, setName] = useState("");
     const [dob, setDob] = useState("");
     const [sex, setSex] = useState("");
@@ -24,23 +23,26 @@ const Enquiry: React.FC = () => {
         }
         setLoading(true);
         try {
-          const response: any = await submitApplication(JSON.stringify({
+            const applicationData = {
                 fullName: name,
                 dateOfBirth: dob,
                 email: email,
                 phoneNumber: phone,
                 gender: sex,
-            }));
-
-            if (response['status'] === 201) {
-                setLoading(false);
-                setSaveSuccess(true);
-                showToast("Application submitted successfully", "success");
-            } else {
-                showToast("Error submitting application", "danger");
             }
+          const res :any  = await submitApplication(applicationData);
+
+            // if (res.status === 200) {
+            //     setLoading(false);
+            //     setSaveSuccess(true);
+            //     showToast(res.data.message, "success");
+            // } else {
+            //     setLoading(false);
+            //     showToast(res.data.message, "danger");
+            // }
+            showToast("Application submit successfully", "success");
         } catch (error) {
-            console.log(error);
+            showToast("Error submitting application", "danger");
         } finally {
             setLoading(false);
         }

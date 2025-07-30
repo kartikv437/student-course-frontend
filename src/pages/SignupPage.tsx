@@ -16,6 +16,7 @@ import {
 } from '@ionic/react';
 import { signup } from '../api';
 import { useHistory } from 'react-router';
+import { useToast } from '../context/ToastContext';
 
 const SignupPage: React.FC = () => {
   const history = useHistory();
@@ -23,6 +24,7 @@ const SignupPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ open: boolean; msg: string }>({ open: false, msg: '' });
+  const { showToast } = useToast();
   const passRef = useRef<HTMLIonInputElement | null>(null);
 
   const onSubmit = async () => {
@@ -30,12 +32,20 @@ const SignupPage: React.FC = () => {
     setLoading(true);
     try {
       const res = await signup(email, passwordValue);
-      setLoading(false);
-      setToast({ open: true, msg: 'OTP sent to your email' });
-      localStorage.setItem('email', email); // Store email for OTP verification
-      history.push('/verify-otp', { state: { email } });
+      if (res.status === 200) {
+        setLoading(false);
+        // setToast({ open: true, msg: 'OTP sent to your email' });
+        showToast(res.data.message, "success")
+        localStorage.setItem('email', email); // Store email for OTP verification
+        history.push('/verify-otp', { state: { email } });
+      } else {
+        setLoading(false);
+        showToast(res.data.message, "danger");
+      }
     } catch (e: any) {
-      setToast({ open: true, msg: e?.response?.data?.message || 'Signup failed' });
+      setLoading(false);
+      // setToast({ open: true, msg: e?.response?.data?.message || 'Signup failed' });
+      showToast(e?.response?.data?.message || 'SignUp failed', "danger")
     }
   };
 
@@ -75,12 +85,12 @@ const SignupPage: React.FC = () => {
           Already have an account? Login
         </IonButton>
 
-        <IonToast
+        {/* <IonToast
           isOpen={toast.open}
           message={toast.msg}
           duration={2000}
           onDidDismiss={() => setToast({ open: false, msg: '' })}
-        />
+        /> */}
         <IonLoading
           isOpen={loading}
           message={'Please wait...'}

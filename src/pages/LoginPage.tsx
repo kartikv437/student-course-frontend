@@ -17,6 +17,7 @@ import {
 import { useAuth } from '../auth/AuthContext';
 import { login } from '../api';
 import { useHistory } from 'react-router';
+import { useToast } from '../context/ToastContext';
 
 
 const LoginPage: React.FC = () => {
@@ -27,19 +28,30 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ open: boolean; msg: string }>({ open: false, msg: '' });
   const passRef = useRef<HTMLIonInputElement | null>(null);
+  const { showToast } = useToast();
 
   const onSubmit = async () => {
     const passwordValue = passRef.current?.value as string;
     setLoading(true);
     try {
-      const { data } = await login(email, passwordValue);
-      setLoading(false);
-      loginWithToken(data.token);
-      localStorage.setItem('email', email); // Store email for future use
-      setToast({ open: true, msg: 'Logged in!' });
-      history.push('/home');
+      const res  = await login(email, passwordValue);
+
+      if (res.status === 200) {
+        setLoading(false);
+        loginWithToken(res.data.result.accessToken);
+        localStorage.setItem('email', email); 
+        // setToast({ open: true, msg: 'Logged in!' });
+        showToast(res.data.message, "success");
+        history.push('/home');
+      } else {
+        setLoading(false);
+        showToast(res.data.message, "danger");
+        // setToast({ open: true, msg: 'Login failed' });
+      }
     } catch (e: any) {
-      setToast({ open: true, msg: e?.response?.data?.message || 'Login failed' });
+      setLoading(false);
+      showToast(e?.response?.data?.message || 'Login failed', "danger");
+      // setToast({ open: true, msg: e?.response?.data?.message || 'Login failed' });
     }
   };
 
@@ -79,18 +91,19 @@ const LoginPage: React.FC = () => {
           New user? Signup
         </IonButton>
 
-        <IonToast
+        {/* <IonToast
           isOpen={toast.open}
           message={toast.msg}
           duration={2000}
           onDidDismiss={() => setToast({ open: false, msg: '' })}
+        /> */}
+        <IonLoading
+          isOpen={loading}
+          message={'Please wait...'}
+          spinner="crescent"
         />
       </IonContent>
-      <IonLoading
-        isOpen={loading}
-        message={'Please wait...'}
-        spinner="crescent"
-      />
+
     </IonPage>
   );
 };
