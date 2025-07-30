@@ -73,13 +73,13 @@ const App: React.FC = () => {
         <IonSplitPane contentId="main-content">
           <SideMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           <IonRouterOutlet id="main-content">
-            <Route path="/" component={HomeTabs} />
+            <Route path="/" component={SignupPage} />
             <Route path="/signup" component={SignupPage} />
             <Route path="/verify-otp" component={VerifyOtpPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/home" component={HomeTabs} />
             <Route path="/admission" component={AdmissionTabs} />
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/signup" />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
