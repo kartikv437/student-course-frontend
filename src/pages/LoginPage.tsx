@@ -10,7 +10,6 @@ import {
   IonButton,
   IonItem,
   IonLabel,
-  IonToast,
   IonList,
   IonLoading,
 } from '@ionic/react';
@@ -30,16 +29,39 @@ const LoginPage: React.FC = () => {
   const passRef = useRef<HTMLIonInputElement | null>(null);
   const { showToast } = useToast();
 
+  const isValidEmail = (email: string): boolean => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const isValidPassword = (password: string): boolean => {
+    // Password must be at least 8 characters with letters and numbers
+    return password.length >= 8 && /\d/.test(password) && /[a-zA-Z]/.test(password);
+  };
+
   const onSubmit = async () => {
     const passwordValue = passRef.current?.value as string;
+
+    if (!email || !passwordValue) {
+      showToast("Email and password are required.", "danger");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      showToast("Invalid email format.", "danger");
+      return;
+    }
+    if (!isValidPassword(passwordValue)) {
+      showToast("Password must be at least 8 characters long and include letters and numbers.", "danger");
+      return;
+    }
     setLoading(true);
     try {
-      const res  = await login(email, passwordValue);
+      const res = await login(email, passwordValue);
 
-      if (res.status === 200) {
+      if (res.status === 200 && res.data.result.role === 'user') {
         setLoading(false);
         loginWithToken(res.data.result.accessToken);
-        localStorage.setItem('email', email); 
+        localStorage.setItem('email', email);
         // setToast({ open: true, msg: 'Logged in!' });
         showToast(res.data.message, "success");
         history.push('/home');

@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setToken(null);
     localStorage.removeItem('token');
-    localStorage.clear(); // Clear all local storage
+    localStorage.clear(); 
     delete api.defaults.headers.common.Authorization;
   };
 

@@ -66,7 +66,7 @@ const VerifyOtpPage: React.FC = () => {
     try {
       const res = await resendOtp(email);
       setLoading(false);
-      setCooldown(60); // Set cooldown to 60 seconds
+      setCooldown(60);
       showToast(res.data?.message || 'OTP resent successfully', 'success');
     } catch (e: any) {
       setLoading(false);

@@ -40,10 +40,14 @@ export const login = (email: string, password: string) =>
 export const resendOtp = (email: string) =>
   api.post('/auth/resend-otp', { email });
 
-export const submitApplication = (applicationData: any) => {
+export const submitApplication = (applicationData: any) => 
   api.post('/submit-application', applicationData);
-}
 
+export const getUserApplication = () => 
+  api.get('/my-applications');
+
+export const updateApplication = (data: any) =>
+  api.put('/update-application', data);
 
 export const uploadDocuments = (formData: FormData) =>
   api.post('/upload', formData, {
@@ -51,4 +55,16 @@ export const uploadDocuments = (formData: FormData) =>
       'Content-Type': 'multipart/form-data',
     },
   });
+
+export const updateDocuments = (formData: FormData) =>
+  api.put('/update-documents', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  
+export const getUserDocuments = () =>
+  api.get('/get-documents');
+
+
 

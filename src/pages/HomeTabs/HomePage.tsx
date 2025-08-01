@@ -1,6 +1,5 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonPage } from "@ionic/react";
 import Header from "../../components/Header";
-import Events from "./Events";
 import News from "./News";
 
 

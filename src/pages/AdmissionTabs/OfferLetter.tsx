@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router';
 import { documentTextOutline, checkmarkCircleOutline, closeCircleOutline, downloadOutline, download } from 'ionicons/icons';
 import { useTabProgress } from '../../context/TabProgressContext';
 import Header from '../../components/Header';
-
+import { jsPDF } from 'jspdf';
 interface LocationState {
     type?: string;
 }
@@ -22,15 +22,32 @@ const OfferLetter: React.FC = () => {
 
     };
 
+    // const downloadOfferLetter = () => {
+    //     const link = document.createElement('a');
+    //     link.href = '/offer-letter.pdf'; 
+    //     link.download = 'offer-letter.pdf';
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    // };
+
     const downloadOfferLetter = () => {
-        // Logic to download the offer letter
-        const link = document.createElement('a');
-        link.href = '/offer-letter.pdf'; // Replace with actual offer letter URL
-        link.download = 'offer-letter.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+  const doc = new jsPDF();
+
+  // Add some dummy text
+  doc.setFontSize(18);
+  doc.text("Offer Letter", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text("Dear Candidate,", 20, 40);
+  doc.text("Congratulations! You have been selected for admission.", 20, 50);
+  doc.text("Please find your admission offer letter.", 20, 60);
+  doc.text("Regards,", 20, 80);
+  doc.text("Admissions Office", 20, 90);
+
+  // Save the PDF with the name
+  doc.save("offer-letter.pdf");
+};
 
     return (
         <IonPage>

@@ -27,8 +27,34 @@ const SignupPage: React.FC = () => {
   const { showToast } = useToast();
   const passRef = useRef<HTMLIonInputElement | null>(null);
 
+  const isValidEmail = (email: string): boolean => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const isValidPassword = (password: string): boolean => {
+    // Password must be at least 8 characters with letters and numbers
+    return password.length >= 8 && /\d/.test(password) && /[a-zA-Z]/.test(password);
+  };
+
   const onSubmit = async () => {
     const passwordValue = passRef.current?.value as string;
+
+    if (!email || !passwordValue) {
+      showToast("Email and password are required.", "danger");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showToast("Invalid email format.", "danger");
+      return;
+    }
+
+    if (!isValidPassword(passwordValue)) {
+      showToast("Password must be at least 8 characters long and include letters and numbers.", "danger");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await signup(email, passwordValue);

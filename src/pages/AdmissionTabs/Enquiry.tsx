@@ -1,52 +1,78 @@
 import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonInput, IonGrid, IonRow, IonCol, IonButton, IonSelect, IonSelectOption, IonToast, IonLoading } from "@ionic/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import Header from "../../components/Header";
 import { useToast } from "../../context/ToastContext";
 import { submitApplication } from "../../api";
+import { getUserApplication } from "../../api";
+import { updateApplication } from "../../api";
 
 const Enquiry: React.FC = () => {
-    const [name, setName] = useState("");
-    const [dob, setDob] = useState("");
-    const [sex, setSex] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
+    const [fullName, setFullName] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [gender, setGender] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
     const history = useHistory();
     const { showToast } = useToast();
 
     const handleProceed = async () => {
-        if (!name || !dob || !sex || !email || !phone) {
+        if (!fullName || !dateOfBirth || !gender || !phoneNumber) {
             showToast("Please fill all Mandatory fields.", "danger");
             return;
         }
+        const formData = {
+            fullName,
+            dateOfBirth,
+            gender,
+            phoneNumber,
+        };
         setLoading(true);
         try {
-            const applicationData = {
-                fullName: name,
-                dateOfBirth: dob,
-                email: email,
-                phoneNumber: phone,
-                gender: sex,
+            let res;
+            if (isUpdate) {
+                res = await updateApplication(formData); // PUT
+            } else {
+                res = await submitApplication(formData); // POST
             }
-          const res :any  = await submitApplication(applicationData);
 
-            // if (res.status === 200) {
-            //     setLoading(false);
-            //     setSaveSuccess(true);
-            //     showToast(res.data.message, "success");
-            // } else {
-            //     setLoading(false);
-            //     showToast(res.data.message, "danger");
-            // }
-            showToast("Application submit successfully", "success");
+            if (res.status === 200) {
+                setLoading(false);
+                setSaveSuccess(true);
+                showToast(res.data.message, "success");
+            } else {
+                setLoading(false);
+                showToast(res.data.message, "danger");
+            }
         } catch (error) {
             showToast("Error submitting application", "danger");
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        const fetchApplication = async () => {
+            setLoading(true);
+            try {
+                const response = await getUserApplication();
+                setFullName(response.data.fullName);
+                setDateOfBirth(response.data.dateOfBirth.slice(0, 10));
+                setGender(response.data.gender);
+                setPhoneNumber(response.data.phoneNumber);
+                setIsUpdate(true);
+                setSaveSuccess(true);
+            } catch (err: any) {
+                showToast(err?.response?.data?.message || 'Failed to load application');
+                setIsUpdate(false);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchApplication();
+    }, [])
 
     const goToDocUpload = () => {
         if (!saveSuccess) {
@@ -73,19 +99,19 @@ const Enquiry: React.FC = () => {
 
                 <IonItem>
                     <IonLabel position="stacked">Full Name*</IonLabel>
-                    <IonInput value={name} onIonChange={(e) => setName(e.detail.value!)} />
+                    <IonInput value={fullName} onIonChange={(e) => setFullName(e.detail.value!)} />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel position="stacked">Date of Birth*</IonLabel>
-                    <IonInput type="date" value={dob} onIonChange={(e) => setDob(e.detail.value!)} />
+                    <IonInput type="date" value={dateOfBirth} onIonChange={(e) => setDateOfBirth(e.detail.value!)} />
                 </IonItem>
 
                 <IonItem className="select-item">
-                    <IonLabel position="stacked" className="select-label">Sex*</IonLabel>
+                    <IonLabel position="stacked" className="select-label">Gender*</IonLabel>
                     <IonSelect
-                        value={sex}
-                        onIonChange={(e) => setSex(e.detail.value!)}
+                        value={gender}
+                        onIonChange={(e) => setGender(e.detail.value!)}
                         placeholder="Select Sex"
                         className="select-input"
                     >
@@ -96,13 +122,8 @@ const Enquiry: React.FC = () => {
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel position="stacked">Email*</IonLabel>
-                    <IonInput type="email" value={email} onIonChange={(e) => setEmail(e.detail.value!)} />
-                </IonItem>
-
-                <IonItem>
                     <IonLabel position="stacked">Phone Number*</IonLabel>
-                    <IonInput type="tel" value={phone} onIonInput={(e) => setPhone(e.detail.value!)} />
+                    <IonInput type="tel" value={phoneNumber} onIonInput={(e) => setPhoneNumber(e.detail.value!)} />
                 </IonItem>
 
                 <IonGrid>
