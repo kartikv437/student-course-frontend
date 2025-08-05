@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonGrid, IonPage, IonRow, IonCol, IonText, IonRouterLink } from "@ionic/react";
+import { IonCard, IonContent, IonGrid, IonPage, IonRow, IonCol, IonText, IonRouterLink, IonRefresherContent, IonRefresher } from "@ionic/react";
 import Header from "../../components/Header";
 import News from "./News";
 import "./HomePage.css"
@@ -8,7 +8,9 @@ const HomePage: React.FC = () => {
     <IonPage>
       <Header />
       <IonContent fullscreen className="ion-padding">
-
+    <IonRefresher  slot="fixed" onIonRefresh={(e) => e.detail.complete()} >
+      <IonRefresherContent></IonRefresherContent>
+    </IonRefresher>
         {/* Banner Section */}
         <section>
           <img
@@ -26,7 +28,9 @@ const HomePage: React.FC = () => {
                   <div className="image-container">
                     <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
                     <IonText className="overlay-text">
-                      <span>About Us</span>
+                      <IonRouterLink routerLink="/home/about-us">
+                        <span style={{ color: "white" }}>About Us</span>
+                      </IonRouterLink>
                     </IonText>
                   </div>
                 </IonCard>
@@ -35,8 +39,10 @@ const HomePage: React.FC = () => {
                 <IonCard className="ion-text-center" >
                   <div className="image-container">
                     <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
-                    <IonText className="overlay-text">
-                      <span>Programs</span>
+                     <IonText className="overlay-text">
+                      <IonRouterLink routerLink="/home/programs">
+                        <span style={{ color: "white" }}>Programs</span>
+                      </IonRouterLink>
                     </IonText>
                   </div>
                 </IonCard>
@@ -58,7 +64,9 @@ const HomePage: React.FC = () => {
                   <div className="image-container">
                     <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
                     <IonText className="overlay-text">
-                      <span>Contact Us</span>
+                       <IonRouterLink routerLink="/home/contact-us">
+                        <span style={{ color: "white" }}>Contact Us</span>
+                      </IonRouterLink>
                     </IonText>
                   </div>
                 </IonCard>

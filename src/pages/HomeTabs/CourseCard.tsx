@@ -34,7 +34,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <p><strong>Duration:</strong> {duration}</p>
         <p><strong>Fee:</strong> {fee}</p>
         <p><strong>Eligibility:</strong> {eligibility}</p>
-        <IonButton disabled expand="block" onClick={() => onEnroll(id)}>
+        <IonButton expand="block" onClick={() => onEnroll(id)}>
           Enroll Now
         </IonButton>
       </IonCardContent>

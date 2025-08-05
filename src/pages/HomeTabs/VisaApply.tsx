@@ -3,47 +3,18 @@ import Header from "../../components/Header"
 import { documentOutline, checkmarkCircleOutline, shieldCheckmarkOutline } from "ionicons/icons";
 import jsPDF from "jspdf";
 import { useState, useRef, useEffect } from "react";
-
+import { useHistory } from "react-router";
+import './VisaApply.css'
 const VisaApply: React.FC = () => {
-    const [currentStep, setCurrentStep] = useState(1);
-    const sectionRefs = useRef<(HTMLIonGridElement | null)[]>([]);
+
     const [visaVerified, setVisaVerified] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSections: number[] = [];
-
-                entries.forEach((entry) => {
-                    const indexAttr = entry.target.getAttribute('data-step');
-                    if (entry.isIntersecting && indexAttr !== null) {
-                        visibleSections.push(parseInt(indexAttr));
-                    }
-                });
-
-                if (visibleSections.length > 0) {
-                    const maxVisible = Math.max(...visibleSections);
-                    setCurrentStep(maxVisible + 1); // because your steps start from 1
-                }
-            },
-            {
-                threshold: 0.5, // 50% of section must be visible
-            }
-        );
-
-        sectionRefs.current.forEach((section) => {
-            if (section) observer.observe(section);
-        });
-
-        return () => {
-            sectionRefs.current.forEach((section) => {
-                if (section) observer.unobserve(section);
-            });
-        };
-    }, []);
+    const [completedSteps, setCompletedSteps] = useState(0);
+    const [submittedSections, setSubmittedSections] = useState<{ [key: string]: boolean }>({});
+    const history = useHistory();
 
     const handleVerification = () => {
         setVisaVerified(true);
+        goToOrientation('visaVerification');
     };
 
     const downloadVisaApplication = () => {
@@ -156,27 +127,36 @@ const VisaApply: React.FC = () => {
         doc.save("bank-statement.pdf");
     };
 
+    const goToOrientation = (section: string) => {
+        if (!submittedSections[section]) {
+            setCompletedSteps((prev) => prev + 1);
+            setSubmittedSections((prev) => ({ ...prev, [section]: true }));
+        }
+
+        if (section === 'orientation') {
+            history.push('/home/orientation');
+        }
+    }
+
     return (
         <IonPage>
             <Header />
-            <div className="scroll-progress-bar">
-                {[1, 2, 3, 4].map((step) => (
+            <div className="progress-container">
+                <div className="progress-bar">
                     <div
-                        key={step}
-                        className={`bar-segment ${currentStep >= step ? 'active' : ''}`}
-                    />
-                ))}
+                        className="progress-bar-fill"
+                        style={{ width: `${(completedSteps / 4) * 100}%` }}
+                    ></div>
+                </div>
             </div>
-            <IonContent fullscreen className="ion-padding">
+            <IonContent fullscreen className="ion-padding top-handling">
                 <IonToolbar color="light">
                     <h2>Step 4 : Visa Verification</h2>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home/payment-section" />
                     </IonButtons>
                 </IonToolbar>
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[0] = el;
-                }} data-step="0">
+                <IonGrid>
                     <IonCard>
                         <IonCardHeader>
                             <IonCardTitle>Visa Stage 1: Campus France</IonCardTitle>
@@ -201,13 +181,12 @@ const VisaApply: React.FC = () => {
                             </IonList>
                         </IonCardContent>
                     </IonCard>
+                    <IonButton onClick={() => goToOrientation('visaApplicationForm')}>Submit Application</IonButton>
                 </IonGrid>
 
 
                 {/* STAGE 2 DOCUMENTS */}
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[1] = el;
-                }} data-step="1">
+                <IonGrid>
                     <IonCard>
                         <IonCardHeader>
                             <IonCardTitle>Visa Stage 2: Bank Statement</IonCardTitle>
@@ -227,13 +206,12 @@ const VisaApply: React.FC = () => {
 
                         </IonCardContent>
                     </IonCard>
+                    <IonButton onClick={() => goToOrientation('bankStatement')}>Submit Bank Statement</IonButton>
                 </IonGrid>
 
 
                 {/* VERIFICATION */}
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[2] = el;
-                }} data-step="2">
+                <IonGrid>
                     <IonCard>
                         <IonCardHeader>
                             <IonCardTitle>Visa Verification</IonCardTitle>
@@ -254,13 +232,12 @@ const VisaApply: React.FC = () => {
                             )}
                         </IonCardContent>
                     </IonCard>
+                    {/* <IonButton onClick={() => goToOrientation('visaVerification')}> </IonButton> */}
                 </IonGrid>
 
 
                 {/* FINAL STATUS */}
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[3] = el;
-                }} data-step="3">
+                <IonGrid>
                     {visaVerified && (
                         <IonCard color="success">
                             <IonCardHeader>
@@ -271,12 +248,12 @@ const VisaApply: React.FC = () => {
                                 <p>Your e-VISA has been issued. You may now proceed to travel preparation.</p>
                             </IonCardContent>
 
-
+                        <IonButton onClick={() => goToOrientation('orientation')}>Go To Orientation</IonButton>
                         </IonCard>
                     )}
                 </IonGrid>
 
-                    
+
 
             </IonContent>
         </IonPage>

@@ -210,6 +210,7 @@ const DocUpload: React.FC = (name) => {
                                             <input
                                                 type="file"
                                                 accept=".pdf,.jpg,.jpeg,.png"
+                                                style={{ padding: "8px 0" }}
                                                 onChange={(e) => handleFileChange(e, doc.key)}
                                             />
                                             Choose File

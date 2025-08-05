@@ -13,6 +13,13 @@ import Orientation from "../AdmissionTabs/Orientation";
 import ConditionalOfferLetter from "./ConditionalOfferLetter";
 import PaymentSection from "./PaymentSection";
 import VisaApply from "./VisaApply";
+import AboutUs from "./AboutUs";
+import Programs from "./Programs";
+import Bachelor from "./Bachelor";
+import Masters from "./Masters";
+import "./index.css";
+import ContactUs from "./ContactUs";
+import Blogs from "./Blogs";
 const HomeTabs: React.FC = () => {
     return (
         <IonTabs>
@@ -27,8 +34,15 @@ const HomeTabs: React.FC = () => {
                 <Route path="/home/visa-process" component={VisaProcess} exact />
                 <Route path="/home/orientation" component={Orientation} exact />
                 <Route path="/home/conditional-offer-letter" component={ConditionalOfferLetter} exact />
-                <Route path="/home/payment-section" component={PaymentSection} exact/>
+                <Route path="/home/payment-section" component={PaymentSection} exact />
                 <Route path="/home/visa-apply" component={VisaApply} exact />
+                <Route path="/home/about-us" component={AboutUs} exact />
+                <Route path="/home/programs" component={Programs} exact />
+                <Route path="/home/programs/bachelor" component={Bachelor} exact />
+                <Route path="/home/programs/masters" component={Masters} exact />
+                <Route path="/home/contact-us" component={ContactUs} exact />
+                <Route path="/blogs" component={Blogs} exact />
+
                 <Redirect exact from="/home" to="/home/homePage" />
             </IonRouterOutlet>
 

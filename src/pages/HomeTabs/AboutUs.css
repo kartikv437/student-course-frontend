@@ -1,0 +1,81 @@
+.card_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #002e5d;
+}
+
+ion-segment-button {
+  --color-checked: #002e5d;
+  --indicator-color: #ffcb05;
+
+  ion-label {
+    font-weight: 600;
+    font-size: x-large;
+  }
+}
+
+ion-accordion .ion-padding {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+  --background: rgb(242 245 248);
+}
+
+ion-accordion {
+  .acc_label {
+    --background: rgb(242 245 248);
+  }
+}
+
+.numbers-card {
+  .schiller-numbers {
+    padding: 0px;
+  }
+}
+
+
+.numbers-card ion-col {
+  text-align: center;
+  background: #002e5d;
+  color: white;
+  padding: 10px;
+}
+
+.numbers-card h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.numbers-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+ion-icon[name="location"] {
+  color: #ffcb05;
+  font-size: 20px;
+}
+
+.page_banner {
+  padding: unset;
+  background: rgb(0 68 112);
+  /* margin-top: 80px; */
+
+}
+
+.banner_title {
+  padding: 0px 10px 0px 10px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+}
+
+.banner_subtitle {
+  --color: white;
+  padding: 0px 10px 10px 10px;
+  font-size: 12px;
+}
+
+.count{
+  color: white !important;
+}

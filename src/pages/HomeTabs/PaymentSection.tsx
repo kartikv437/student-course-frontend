@@ -3,43 +3,21 @@ import { cardOutline, personOutline, calendarOutline, keyOutline, lockClosedOutl
 import { useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import { useHistory } from "react-router";
-
+import './PaymentSection.css';
 const PaymentSection: React.FC = () => {
-    const [currentStep, setCurrentStep] = useState(1);
-    const sectionRefs = useRef<(HTMLIonGridElement | null)[]>([]);
+    const [completedSteps, setCompletedSteps] = useState(0);
+    const [submittedSections, setSubmittedSections] = useState<{ [key: string]: boolean }>({});
     const history = useHistory();
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSections: number[] = [];
 
-                entries.forEach((entry) => {
-                    const indexAttr = entry.target.getAttribute('data-step');
-                    if (entry.isIntersecting && indexAttr !== null) {
-                        visibleSections.push(parseInt(indexAttr));
-                    }
-                });
-
-                if (visibleSections.length > 0) {
-                    const maxVisible = Math.max(...visibleSections);
-                    setCurrentStep(maxVisible + 1); // because your steps start from 1
-                }
-            },
-            {
-                threshold: 0.5, // 50% of section must be visible
-            }
-        );
-
-        sectionRefs.current.forEach((section) => {
-            if (section) observer.observe(section);
-        });
-
-        return () => {
-            sectionRefs.current.forEach((section) => {
-                if (section) observer.unobserve(section);
-            });
-        };
-    }, []);
+    const goToVisaSection=(section:string)=>{
+         if (!submittedSections[section]) {
+            setCompletedSteps((prev) => prev + 1);
+            setSubmittedSections((prev) => ({ ...prev, [section]: true }));
+        }
+        if (section === 'fullPayment') {
+            history.push('/home/visa-apply');
+        }
+    }
 
     const goToVisaProcess = () => {
         // Logic to navigate to the visa process page
@@ -50,24 +28,22 @@ const PaymentSection: React.FC = () => {
     return (
         <IonPage>
             <Header />
-            <div className="scroll-progress-bar">
-                {[1, 2].map((step) => (
+            <div className="progress-container">
+                <div className="progress-bar">
                     <div
-                        key={step}
-                        className={`bar-segment ${currentStep >= step ? 'active' : ''}`}
-                    />
-                ))}
+                        className="progress-bar-fill"
+                        style={{ width: `${(completedSteps / 2) * 100}%` }}
+                    ></div>
+                </div>
             </div>
-            <IonContent fullscreen className="ion-padding">
+            <IonContent fullscreen className="ion-padding top-handling">
                 <IonToolbar>
                     <IonTitle>Step 3 : Payment</IonTitle>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home/conditional-offer-letter" />
                     </IonButtons>
                 </IonToolbar>
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[0] = el;
-                }} data-step="0">
+                <IonGrid>
                     <IonCard>
                         <IonCardHeader>
                             <IonCardTitle>
@@ -104,7 +80,7 @@ const PaymentSection: React.FC = () => {
                                     </IonItem>
                                 </div>
 
-                                <IonButton expand="block" color="success" className="ion-margin-top" onClick={goToVisaProcess}>
+                                <IonButton expand="block" color="success" className="ion-margin-top" onClick={()=>goToVisaSection('partialPayment')}>
                                     <IonIcon icon={lockClosedOutline} slot="start" />
                                     Partial Payment
                                 </IonButton>
@@ -113,9 +89,7 @@ const PaymentSection: React.FC = () => {
                     </IonCard>
                 </IonGrid>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[1] = el;
-                }} data-step="1">
+                <IonGrid>
                     <IonCard>
                         <IonCardHeader>
                             <IonCardTitle>
@@ -152,7 +126,7 @@ const PaymentSection: React.FC = () => {
                                     </IonItem>
                                 </div>
 
-                                <IonButton expand="block" color="success" className="ion-margin-top" onClick={goToVisaProcess}>
+                                <IonButton expand="block" color="success" className="ion-margin-top" onClick={()=>goToVisaSection('fullPayment')}>
                                     <IonIcon icon={lockClosedOutline} slot="start" />
                                     Full Payment
                                 </IonButton>

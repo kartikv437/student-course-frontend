@@ -17,41 +17,8 @@ const ApplicationForm: React.FC = () => {
     });
     const history = useHistory();
 
-    const [currentStep, setCurrentStep] = useState(1);
-    const sectionRefs = useRef<(HTMLIonGridElement | null)[]>([]);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSections: number[] = [];
-
-                entries.forEach((entry) => {
-                    const indexAttr = entry.target.getAttribute('data-step');
-                    if (entry.isIntersecting && indexAttr !== null) {
-                        visibleSections.push(parseInt(indexAttr));
-                    }
-                });
-
-                if (visibleSections.length > 0) {
-                    const maxVisible = Math.max(...visibleSections);
-                    setCurrentStep(maxVisible + 1); // because your steps start from 1
-                }
-            },
-            {
-                threshold: 0.5, // 50% of section must be visible
-            }
-        );
-
-        sectionRefs.current.forEach((section) => {
-            if (section) observer.observe(section);
-        });
-
-        return () => {
-            sectionRefs.current.forEach((section) => {
-                if (section) observer.unobserve(section);
-            });
-        };
-    }, []);
+    const [completedSteps, setCompletedSteps] = useState(0);
+    const [submittedSections, setSubmittedSections] = useState<{ [key: string]: boolean }>({});
 
     const handleAcadamicFileChange = (e: React.ChangeEvent<HTMLInputElement>, docType: string) => {
         if (e.target.files && e.target.files[0]) {
@@ -65,6 +32,16 @@ const ApplicationForm: React.FC = () => {
         }
     }
 
+    const submitForm = (section: string) => {
+        if (!submittedSections[section]) {
+            setCompletedSteps((prev) => prev + 1);
+            setSubmittedSections((prev) => ({ ...prev, [section]: true }));
+        }
+        if (section === 'documents') {
+            history.push('/home/conditional-offer-letter');
+        }
+    };
+
     const gotoVerifyOfferLetter = () => {
         history.push('/home/conditional-offer-letter');
     }
@@ -72,26 +49,16 @@ const ApplicationForm: React.FC = () => {
     return (
         <IonPage>
             <Header />
-            <div className="scroll-progress-bar">
-                                {/* {[
-                    { step: 1, name: "Application Form" },
-                    { step: 2, name: "Academic Info" },
-                    { step: 3, name: "Passport Details" },
-                    { step: 4, name: "Documents" }
-                ].map(({ step, name }) => (
-                    <div key={step} className="bar-segment-wrapper">
-                        <div className={`bar-segment ${currentStep >= step ? 'active' : ''}`} />
-                        <div className="segment-label">{name}</div>
-                    </div>
-                ))} */}
-                {[1, 2, 3, 4].map((step) => (
+            {/* ✅ Progress Bar */}
+            <div className="progress-container">
+                <div className="progress-bar">
                     <div
-                        key={step}
-                        className={`bar-segment ${currentStep >= step ? 'active' : ''}`}
-                    />
-                ))}
+                        className="progress-bar-fill"
+                        style={{ width: `${(completedSteps / 4) * 100}%` }}
+                    ></div>
+                </div>
             </div>
-            <IonContent fullscreen className="ion-padding">
+            <IonContent fullscreen className="ion-padding top-handling">
                 <IonToolbar color="light" className="upload-header">
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home/homePage" />
@@ -159,33 +126,30 @@ const ApplicationForm: React.FC = () => {
                     </IonItem>
                 </IonList>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[0] = el;
-                }} data-step="0">
+                <IonGrid>
                     <IonTitle>
                         <h3>Step 1 : Application Form</h3>
                     </IonTitle>
                     <IonItem className="input-item">
                         <IonLabel position="stacked">Full Name*</IonLabel>
-                        <IonInput className="custom-input"/>
+                        <IonInput className="custom-input" />
                     </IonItem>
                     <IonItem className="input-item">
                         <IonLabel position="stacked">Contact Number*</IonLabel>
-                        <IonInput className="custom-input"/>
+                        <IonInput className="custom-input" />
                     </IonItem>
                     <IonItem className="input-item">
                         <IonLabel position="stacked">Course*</IonLabel>
-                        <IonInput className="custom-input"/>
+                        <IonInput className="custom-input" />
                     </IonItem>
                     <IonItem className="input-item">
                         <IonLabel position="stacked">Address*</IonLabel>
-                        <IonInput className="custom-input"/>
+                        <IonInput className="custom-input" />
                     </IonItem>
+                    <IonButton onClick={() => submitForm('application')}>Submit</IonButton>
                 </IonGrid>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[1] = el;
-                }} data-step="1">
+                <IonGrid>
                     <IonTitle>
                         <h3>Acadamic Information</h3>
                     </IonTitle>
@@ -226,11 +190,10 @@ const ApplicationForm: React.FC = () => {
                             </IonItem>
                         ))}
                     </IonList>
+                    <IonButton onClick={() => submitForm('academic')}>Submit</IonButton>
                 </IonGrid>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[2] = el;
-                }} data-step="2">
+                <IonGrid>
                     <IonTitle>
                         <h3>Passport Details</h3>
                     </IonTitle>
@@ -238,11 +201,10 @@ const ApplicationForm: React.FC = () => {
                         <IonLabel position="stacked">Passport Number*</IonLabel>
                         <IonInput />
                     </IonItem>
+                    <IonButton onClick={() => submitForm('passport')}>Submit</IonButton>
                 </IonGrid>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[3] = el;
-                }} data-step="3">
+                <IonGrid>
                     <IonTitle>
                         <h3>Required Documents</h3>
                     </IonTitle>
@@ -284,11 +246,12 @@ const ApplicationForm: React.FC = () => {
                             </IonItem>
                         ))}
                     </IonList>
+                    <IonButton onClick={() => submitForm('documents')}>Submit</IonButton>
                 </IonGrid>
 
-                <IonGrid>
+                {/* <IonGrid>
                     <IonButton expand="block" onClick={gotoVerifyOfferLetter}>Submit</IonButton>
-                </IonGrid>
+                </IonGrid> */}
 
             </IonContent>
         </IonPage>

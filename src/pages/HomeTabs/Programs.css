@@ -1,0 +1,64 @@
+.comms-docs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+
+}
+
+.tile-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.tile {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+ion-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.red-tile {
+    background-color: #e64c3c;
+}
+
+.green-tile {
+    background-color: #839d22;
+}
+
+.footer-links {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.links {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+a {
+    color: #666;
+    text-decoration: underline;
+}

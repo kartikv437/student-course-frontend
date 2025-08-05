@@ -14,12 +14,12 @@ const OfferLetter: React.FC = () => {
     const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
     const history = useHistory();
     const { unlockStep } = useTabProgress();
-
+    const email = localStorage.getItem('email'); // Assuming user info is stored in localStorage
+    const user = email ? { email: email.split('@')[0] } : null; // Simplified user object
     const goToPayment = () => {
         // Logic to navigate to the payment page
         history.push('/home/payment-gateway');
-        // unlockStep(3);
-
+        unlockStep(3);
     };
 
     const downloadOfferLetter = () => {
@@ -54,7 +54,7 @@ const OfferLetter: React.FC = () => {
                 </IonToolbar>
                 <IonCard>
                     <IonCardHeader>
-                        <IonCardTitle>Kartik</IonCardTitle>
+                        <IonCardTitle>{user ? user.email : "Guest"}</IonCardTitle>
                     </IonCardHeader>
 
                     <IonCardContent>

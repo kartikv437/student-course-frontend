@@ -13,41 +13,11 @@ const ConditionalOfferLetter: React.FC = () => {
     const [interviewStatus, setInterviewStatus] = useState(false);
     const history = useHistory();
     const [offerLetter, setOfferLetter] = useState(false);
-    const [currentStep, setCurrentStep] = useState(1);
-    const sectionRefs = useRef<(HTMLIonGridElement | null)[]>([]);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSections: number[] = [];
-
-                entries.forEach((entry) => {
-                    const indexAttr = entry.target.getAttribute('data-step');
-                    if (entry.isIntersecting && indexAttr !== null) {
-                        visibleSections.push(parseInt(indexAttr));
-                    }
-                });
-
-                if (visibleSections.length > 0) {
-                    const maxVisible = Math.max(...visibleSections);
-                    setCurrentStep(maxVisible + 1); // because your steps start from 1
-                }
-            },
-            {
-                threshold: 0.5, // 50% of section must be visible
-            }
-        );
-
-        sectionRefs.current.forEach((section) => {
-            if (section) observer.observe(section);
-        });
-
-        return () => {
-            sectionRefs.current.forEach((section) => {
-                if (section) observer.unobserve(section);
-            });
-        };
-    }, []);
+    const [completedSteps, setCompletedSteps] = useState(0);
+    const [submittedSections, setSubmittedSections] = useState<{ [key: string]: boolean }>({});
+    const email = localStorage.getItem('email'); // Assuming user info is stored in localStorage
+    const user = email ? { email: email.split('@')[0] } : null; // Simplified user object
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -89,15 +59,21 @@ const ConditionalOfferLetter: React.FC = () => {
     };
 
 
-    const goToOfferLetter = (type?: string) => {
+    const goToPaymentSection = (type: string) => {
         setOfferLetter(true);
         // history.push('/home/offer-letter', { type });
+        if (!submittedSections[type]) {
+            setCompletedSteps((prev) => prev + 1);
+            setSubmittedSections((prev) => ({ ...prev, [type]: true }));
+        }
+        if (type === "payment") {
+            history.push('/home/payment-section');
+        }
     };
 
     const goToPayment = () => {
         // Logic to navigate to the payment page
         history.push('/home/payment-section');
-        // unlockStep(3);
 
     };
 
@@ -122,15 +98,16 @@ const ConditionalOfferLetter: React.FC = () => {
     return (
         <IonPage>
             <Header />
-            <div className="scroll-progress-bar">
-                {[1, 2].map((step) => (
+            {/* ✅ Progress Bar */}
+            <div className="progress-container">
+                <div className="progress-bar">
                     <div
-                        key={step}
-                        className={`bar-segment ${currentStep >= step ? 'active' : ''}`}
-                    />
-                ))}
+                        className="progress-bar-fill"
+                        style={{ width: `${(completedSteps / 2) * 100}%` }}
+                    ></div>
+                </div>
             </div>
-            <IonContent className="ion-padding">
+            <IonContent fullscreen className="ion-padding  top-handling">
                 <IonToolbar color="light">
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home/applicationForm" />
@@ -140,13 +117,15 @@ const ConditionalOfferLetter: React.FC = () => {
                     </IonTitle>
                 </IonToolbar>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[0] = el;
-                }} data-step="0">
+                <IonGrid>
                     {!interviewStatus && (
                         <IonItem>
-                            <IonLabel>Upload English Proficiency Certificate</IonLabel>
-                            <input type="file" accept=".pdf,.doc,.docx" style={{ padding: "8px 0" }} onChange={handleFileChange} />
+                            <IonLabel >Upload English Proficiency Certificate</IonLabel>
+                            <label className="custom-file-upload">
+                                <input type="file" accept=".pdf,.doc,.docx" style={{ padding: "8px 0" }} onChange={handleFileChange} />
+                                Choose File
+                            </label>
+
                         </IonItem>
                     )}
 
@@ -178,30 +157,28 @@ const ConditionalOfferLetter: React.FC = () => {
                     )}
                     {status && (
                         <IonItem>
-                            <IonButton expand="block" color="primary" onClick={() => goToOfferLetter('conditional')}>
+                            <IonButton expand="block" color="primary" onClick={() => goToPaymentSection('conditional')}>
                                 View Conditional Offer Letter
                             </IonButton>
                         </IonItem>
                     )}
                     {unconditional && (
                         <IonItem>
-                            <IonButton expand="block" color="secondary" onClick={() => goToOfferLetter('unconditional')}>
+                            <IonButton expand="block" color="secondary" onClick={() => goToPaymentSection('unconditional')}>
                                 View Unconditional Offer Letter
                             </IonButton>
                         </IonItem>
                     )}
                 </IonGrid>
 
-                <IonGrid ref={(el) => {
-                    sectionRefs.current[1] = el;
-                }} data-step="1">
+                <IonGrid>
                     {offerLetter && (
                         <div>
                             <IonTitle>
                                 <h3>Download Offer Letter</h3></IonTitle>
                             <IonCard>
                                 <IonCardHeader>
-                                    <IonCardTitle>Narendra</IonCardTitle>
+                                    <IonCardTitle>{user ? user.email : "Guest"}</IonCardTitle>
                                 </IonCardHeader>
 
                                 <IonCardContent>
@@ -232,7 +209,7 @@ const ConditionalOfferLetter: React.FC = () => {
                                             <IonIcon icon={downloadOutline} slot="start" />
                                             Download Offer Letter
                                         </IonButton>
-                                        <IonButton color="danger" expand="block" className="ion-margin-top" onClick={goToPayment}>
+                                        <IonButton color="danger" expand="block" className="ion-margin-top" onClick={() => goToPaymentSection('payment')}>
                                             Proceed to Payment
                                         </IonButton>
                                     </div>
