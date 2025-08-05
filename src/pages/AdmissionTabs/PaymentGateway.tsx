@@ -49,18 +49,18 @@ const PaymentGateway: React.FC = () => {
     const goToVisaProcess = () => {
         // Logic to navigate to the visa process page
         // You can use React Router or any other navigation method
-        history.push('/admission/visa-process');
+        history.push('/home/visa-process');
         unlockStep(4);
     };
 
     return (
         <IonPage>
             <Header />
-            <IonContent className="ion-padding">
+            <IonContent fullscreen className="ion-padding">
                 <IonToolbar>
                     <IonTitle>Secure Payment</IonTitle>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/" />
+                        <IonBackButton defaultHref="/home/offer-letter" />
                     </IonButtons>
                 </IonToolbar>
                 <IonCard>

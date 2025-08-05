@@ -4,6 +4,7 @@ import '../theme/variables.css';
 import { logOutOutline, menuOutline, personCircle } from "ionicons/icons";
 import { useAuth } from "../auth/AuthContext";
 import { useHistory } from "react-router";
+import { useState } from "react";
 
 interface HeaderProps {
     title?: string;
@@ -15,7 +16,8 @@ const Header: React.FC<HeaderProps> = ({ title = 'Student App', showMenu = true 
     const history = useHistory();
     const email = localStorage.getItem('email'); // Assuming user info is stored in localStorage
     const user = email ? { email: email.split('@')[0] } : null; // Simplified user object
-    
+    const [showPopover, setShowPopover] = useState(false);
+    const [popoverEvent, setPopoverEvent] = useState<MouseEvent | undefined>();
     const handleLogout = () => {
         logout();         // clear token etc.
         history.push('/login', { replace: true }); // then redirect
@@ -33,12 +35,19 @@ const Header: React.FC<HeaderProps> = ({ title = 'Student App', showMenu = true 
                 </IonButtons>
                 <IonTitle>{title}</IonTitle>
                 {/* User Icon */}
-                <IonButton id="user-popover-trigger" slot="end" color="primary" fill="clear">
+                <IonButton slot="end" color="primary" fill="clear"
+                    onClick={(e) => {
+                        e.persist();
+                        setPopoverEvent(e.nativeEvent);
+                        setShowPopover(true);
+                    }}>
                     <IonIcon icon={personCircle} size="large" className="user-icon" />
                 </IonButton>
 
                 {/* Popover attached to the button via trigger */}
-                <IonPopover trigger="user-popover-trigger" triggerAction="click">
+                <IonPopover isOpen={showPopover}
+                    event={popoverEvent}
+                    onDidDismiss={() => setShowPopover(false)} >
                     <IonList>
                         <IonItem lines="full">
                             <IonIcon icon={personCircle} slot="start" />

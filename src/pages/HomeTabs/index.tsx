@@ -4,7 +4,15 @@ import { Route, Redirect } from "react-router";
 import HomePage from "./HomePage";
 import Events from "./Events";
 import Courses from "./Courses";
-
+import ApplicationForm from "./ApplicationForm";
+import VerifyOfferLetter from "../AdmissionTabs/VerifyOfferLetter";
+import OfferLetter from "../AdmissionTabs/OfferLetter";
+import PaymentGateway from "../AdmissionTabs/PaymentGateway";
+import VisaProcess from "../AdmissionTabs/VisaProcess";
+import Orientation from "../AdmissionTabs/Orientation";
+import ConditionalOfferLetter from "./ConditionalOfferLetter";
+import PaymentSection from "./PaymentSection";
+import VisaApply from "./VisaApply";
 const HomeTabs: React.FC = () => {
     return (
         <IonTabs>
@@ -12,6 +20,15 @@ const HomeTabs: React.FC = () => {
                 <Route path="/home/homePage" component={HomePage} exact />
                 <Route path="/home/courses" component={Courses} exact />
                 <Route path="/home/events" component={Events} exact />
+                <Route path="/home/applicationForm" component={ApplicationForm} exact />
+                <Route path="/home/verify-offer-letter" component={VerifyOfferLetter} exact />
+                <Route path="/home/offer-letter" component={OfferLetter} exact />
+                <Route path="/home/payment-gateway" component={PaymentGateway} exact />
+                <Route path="/home/visa-process" component={VisaProcess} exact />
+                <Route path="/home/orientation" component={Orientation} exact />
+                <Route path="/home/conditional-offer-letter" component={ConditionalOfferLetter} exact />
+                <Route path="/home/payment-section" component={PaymentSection} exact/>
+                <Route path="/home/visa-apply" component={VisaApply} exact />
                 <Redirect exact from="/home" to="/home/homePage" />
             </IonRouterOutlet>
 

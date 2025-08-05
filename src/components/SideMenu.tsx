@@ -32,7 +32,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isDarkMode, toggleDarkMode }) => {
                 <IonList>
                     <IonMenuToggle autoHide={false}>
                         <IonItem routerLink="/home" routerDirection="root">Home</IonItem>
-                        <IonItem routerLink="/admission" routerDirection="root">Admission</IonItem>
+                        {/* <IonItem routerLink="/admission" routerDirection="root">Admission</IonItem> */}
                         <IonItem lines="none">
                             <IonLabel>Mode</IonLabel>
                             <IonToggle

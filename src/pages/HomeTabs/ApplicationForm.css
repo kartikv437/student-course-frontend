@@ -1,0 +1,90 @@
+.upload-item {
+    margin-bottom: 15px;
+}
+
+.upload-item-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+    /* Optional spacing */
+}
+
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: transparent;
+    border: 1px solid #3880ff;
+    border-radius: 6px;
+    color: #3880ff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.custom-file-upload:hover {
+    background-color: #3880ff;
+    color: white;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.scroll-progress-bar {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  display: flex;
+  z-index: 9999;
+}
+
+.bar-segment {
+  flex: 1;
+  background-color: #e0e0e0;
+  transition: background-color 0.3s ease;
+  height: 15px;
+}
+
+.bar-segment.active {
+  background-color: #28a745; /* Green */
+}
+
+ion-grid[data-step] {
+  min-height: 10vh; /* so observer can detect it while scrolling */
+  margin-bottom: 50px;
+}
+
+/* .custom-input {
+  --background: #ffffff;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --border-radius: 6px;
+  --border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+}
+
+.custom-input.ion-invalid {
+  --border: 1px solid red;
+} */
+
+/* .input-item {
+  --highlight-color-focused: #4caf50;
+  --background: #f8f8f8;
+  border-radius: 10px;
+  margin-bottom: 12px;
+} */

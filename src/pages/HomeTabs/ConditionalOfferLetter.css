@@ -1,0 +1,25 @@
+.scroll-progress-bar {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  display: flex;
+  z-index: 9999;
+}
+
+.bar-segment {
+  flex: 1;
+  background-color: #e0e0e0;
+  transition: background-color 0.3s ease;
+  height: 15px;
+}
+
+.bar-segment.active {
+  background-color: #28a745; /* Green */
+}
+
+ion-grid[data-step] {
+  min-height: 40vh; /* so observer can detect it while scrolling */
+  margin-bottom: 50px;
+}

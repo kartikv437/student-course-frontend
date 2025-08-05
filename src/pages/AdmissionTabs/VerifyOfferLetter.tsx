@@ -11,11 +11,11 @@ const VerifyOfferLetter: React.FC = () => {
     const [interviewStatus, setInterviewStatus] = useState(false);
     const history = useHistory();
 
-    useEffect(() => {
-        if (!localStorage.getItem('stepsUnlocked')) {
-            history.push('/');
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!localStorage.getItem('stepsUnlocked')) {
+    //         history.push('/');
+    //     }
+    // }, []);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -59,7 +59,7 @@ const VerifyOfferLetter: React.FC = () => {
     const goToOfferLetter = (type?: string) => {
         // Logic to navigate to the next step
         // You can use the 'type' parameter if needed
-        history.push('/admission/offer-letter', { type });
+        history.push('/home/offer-letter', { type });
     };
 
     return (
@@ -68,7 +68,7 @@ const VerifyOfferLetter: React.FC = () => {
             <IonContent className="ion-padding">
                 <IonToolbar color="light">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/" />
+                        <IonBackButton defaultHref="/home/applicationForm" />
                     </IonButtons>
                     <IonTitle>
                         <h2>Offer Letter</h2>

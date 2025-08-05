@@ -1,7 +1,7 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonPage } from "@ionic/react";
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonGrid, IonPage, IonRow, IonCol, IonText, IonRouterLink } from "@ionic/react";
 import Header from "../../components/Header";
 import News from "./News";
-
+import "./HomePage.css"
 
 const HomePage: React.FC = () => {
   return (
@@ -19,6 +19,55 @@ const HomePage: React.FC = () => {
         </section>
 
         <section>
+          <IonGrid>
+            <IonRow>
+              <IonCol size="12">
+                <IonCard className="ion-text-center">
+                  <div className="image-container">
+                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                    <IonText className="overlay-text">
+                      <span>About Us</span>
+                    </IonText>
+                  </div>
+                </IonCard>
+              </IonCol>
+              <IonCol size="12">
+                <IonCard className="ion-text-center" >
+                  <div className="image-container">
+                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                    <IonText className="overlay-text">
+                      <span>Programs</span>
+                    </IonText>
+                  </div>
+                </IonCard>
+              </IonCol>
+              <IonCol size="12">
+                <IonCard className="ion-text-center">
+                  <div className="image-container">
+                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                    <IonText className="overlay-text">
+                      <IonRouterLink routerLink="/home/applicationForm">
+                        <span style={{ color: "white" }}>Application Form</span>
+                      </IonRouterLink>
+                    </IonText>
+                  </div>
+                </IonCard>
+              </IonCol>
+              <IonCol size="12">
+                <IonCard className="ion-text-center">
+                  <div className="image-container">
+                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                    <IonText className="overlay-text">
+                      <span>Contact Us</span>
+                    </IonText>
+                  </div>
+                </IonCard>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </section >
+
+        {/* <section>
           <h3>Move Between Schiller’s Four International Campuses</h3>
           <p>
             As the 1st American multi-campus university in Europe, our innovative intercampus mobility program allows you to move between any of Schiller’s campuses after Year 1.
@@ -40,15 +89,15 @@ const HomePage: React.FC = () => {
           <p>
             We have simplified the process to make intercampus mobility easy and flexible. Explore the world while earning your degree!
           </p>
-        </section>
+        </section> */}
 
         {/* News Section */}
         <section>
           <News />
         </section>
 
-      </IonContent>
-    </IonPage>
+      </IonContent >
+    </IonPage >
   );
 }
 

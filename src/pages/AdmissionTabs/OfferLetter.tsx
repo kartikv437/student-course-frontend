@@ -17,37 +17,28 @@ const OfferLetter: React.FC = () => {
 
     const goToPayment = () => {
         // Logic to navigate to the payment page
-        history.push('/admission/payment-gateway');
-        unlockStep(3);
+        history.push('/home/payment-gateway');
+        // unlockStep(3);
 
     };
 
-    // const downloadOfferLetter = () => {
-    //     const link = document.createElement('a');
-    //     link.href = '/offer-letter.pdf'; 
-    //     link.download = 'offer-letter.pdf';
-    //     document.body.appendChild(link);
-    //     link.click();
-    //     document.body.removeChild(link);
-    // };
-
     const downloadOfferLetter = () => {
-  const doc = new jsPDF();
+        const doc = new jsPDF();
 
-  // Add some dummy text
-  doc.setFontSize(18);
-  doc.text("Offer Letter", 20, 20);
+        // Add some dummy text
+        doc.setFontSize(18);
+        doc.text("Offer Letter", 20, 20);
 
-  doc.setFontSize(12);
-  doc.text("Dear Candidate,", 20, 40);
-  doc.text("Congratulations! You have been selected for admission.", 20, 50);
-  doc.text("Please find your admission offer letter.", 20, 60);
-  doc.text("Regards,", 20, 80);
-  doc.text("Admissions Office", 20, 90);
+        doc.setFontSize(12);
+        doc.text("Dear Candidate,", 20, 40);
+        doc.text("Congratulations! You have been selected for admission.", 20, 50);
+        doc.text("Please find your admission offer letter.", 20, 60);
+        doc.text("Regards,", 20, 80);
+        doc.text("Admissions Office", 20, 90);
 
-  // Save the PDF with the name
-  doc.save("offer-letter.pdf");
-};
+        // Save the PDF with the name
+        doc.save("offer-letter.pdf");
+    };
 
     return (
         <IonPage>
@@ -55,10 +46,10 @@ const OfferLetter: React.FC = () => {
             <IonContent className="ion-padding">
                 <IonToolbar color="light">
                     {/* <IonTitle> */}
-                        <h2>{capitalizeFirstLetter(type ?? '')} Offer Letter</h2>
+                    <h2>{capitalizeFirstLetter(type ?? '')} Offer Letter</h2>
                     {/* </IonTitle> */}
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/" />
+                        <IonBackButton defaultHref="/home/verify-offer-letter" />
                     </IonButtons>
                 </IonToolbar>
                 <IonCard>
