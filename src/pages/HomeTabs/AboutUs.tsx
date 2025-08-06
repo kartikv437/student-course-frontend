@@ -8,14 +8,14 @@ const AboutUs: React.FC = () => {
             <IonContent fullscreen className="ion-padding">
                 <IonToolbar color="light" className="upload-header">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/homePage" />
+                        <IonBackButton  defaultHref="/home/homePage" />
                     </IonButtons>
                     <IonTitle className="upload-title">
                         <h2>About Us</h2>
                     </IonTitle>
                 </IonToolbar>
                 <IonCardHeader className="page_banner">
-                    <img src="/about_us_home.jpg" alt="Graduates" />
+                    <img src="/about_us_banner.jpg" alt="Graduates" />
                     <IonCardTitle className="banner_title">About Schiller International University</IonCardTitle>
                     <IonCardSubtitle className="banner_subtitle">Learn about Schiller’s multinational student body, international
                         campuses, and vibrant student life.</IonCardSubtitle>

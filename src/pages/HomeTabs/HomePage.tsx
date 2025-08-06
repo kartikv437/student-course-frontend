@@ -8,9 +8,9 @@ const HomePage: React.FC = () => {
     <IonPage>
       <Header />
       <IonContent fullscreen className="ion-padding">
-    <IonRefresher  slot="fixed" onIonRefresh={(e) => e.detail.complete()} >
-      <IonRefresherContent></IonRefresherContent>
-    </IonRefresher>
+        <IonRefresher slot="fixed" onIonRefresh={(e) => e.detail.complete()} >
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         {/* Banner Section */}
         <section>
           <img
@@ -25,50 +25,50 @@ const HomePage: React.FC = () => {
             <IonRow>
               <IonCol size="12">
                 <IonCard className="ion-text-center">
-                  <div className="image-container">
-                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
-                    <IonText className="overlay-text">
-                      <IonRouterLink routerLink="/home/about-us">
-                        <span style={{ color: "white" }}>About Us</span>
-                      </IonRouterLink>
-                    </IonText>
-                  </div>
+                  <IonRouterLink routerLink="/home/about-us">
+                    <div className="image-container">
+                      <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                      <IonText className="overlay-text">
+                        <span style={{ color: "white", fontSize: "20px" }}>About Us</span>
+                      </IonText>
+                    </div>
+                  </IonRouterLink>
                 </IonCard>
               </IonCol>
               <IonCol size="12">
                 <IonCard className="ion-text-center" >
-                  <div className="image-container">
-                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
-                     <IonText className="overlay-text">
-                      <IonRouterLink routerLink="/home/programs">
-                        <span style={{ color: "white" }}>Programs</span>
-                      </IonRouterLink>
-                    </IonText>
-                  </div>
+                  <IonRouterLink routerLink="/home/programs">
+                    <div className="image-container">
+                      <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                      <IonText className="overlay-text">
+                        <span style={{ color: "white", fontSize: "20px" }}>Programs</span>
+                      </IonText>
+                    </div>
+                  </IonRouterLink>
                 </IonCard>
               </IonCol>
               <IonCol size="12">
                 <IonCard className="ion-text-center">
-                  <div className="image-container">
-                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
-                    <IonText className="overlay-text">
-                      <IonRouterLink routerLink="/home/applicationForm">
-                        <span style={{ color: "white" }}>Application Form</span>
-                      </IonRouterLink>
-                    </IonText>
-                  </div>
+                  <IonRouterLink routerLink="/home/applicationForm">
+                    <div className="image-container">
+                      <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                      <IonText className="overlay-text">
+                        <span style={{ color: "white", fontSize: "20px" }}>Application Form</span>
+                      </IonText>
+                    </div>
+                  </IonRouterLink>
                 </IonCard>
               </IonCol>
               <IonCol size="12">
                 <IonCard className="ion-text-center">
-                  <div className="image-container">
-                    <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
-                    <IonText className="overlay-text">
-                       <IonRouterLink routerLink="/home/contact-us">
-                        <span style={{ color: "white" }}>Contact Us</span>
-                      </IonRouterLink>
-                    </IonText>
-                  </div>
+                  <IonRouterLink routerLink="/home/contact-us">
+                    <div className="image-container">
+                      <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
+                      <IonText className="overlay-text">
+                        <span style={{ color: "white", fontSize: "20px" }}>Contact Us</span>
+                      </IonText>
+                    </div>
+                  </IonRouterLink>
                 </IonCard>
               </IonCol>
             </IonRow>

@@ -1,5 +1,5 @@
-import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonButton, IonGrid, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonList, IonText } from "@ionic/react";
-import { useEffect, useRef, useState } from "react";
+import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonButton, IonGrid, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonList, IonText, IonLoading } from "@ionic/react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import Header from "../../components/Header";
 import { documentTextOutline, downloadOutline } from "ionicons/icons";
@@ -13,7 +13,7 @@ const ConditionalOfferLetter: React.FC = () => {
     const [interviewStatus, setInterviewStatus] = useState(false);
     const history = useHistory();
     const [offerLetter, setOfferLetter] = useState(false);
-
+    const [loading, setLoading] = useState(false);
     const [completedSteps, setCompletedSteps] = useState(0);
     const [submittedSections, setSubmittedSections] = useState<{ [key: string]: boolean }>({});
     const email = localStorage.getItem('email'); // Assuming user info is stored in localStorage
@@ -50,8 +50,9 @@ const ConditionalOfferLetter: React.FC = () => {
         // Logic to send email for scheduling interview
         setStatusText("Interview schedule link has been sent to your registered email address.");
         setInterviewStatus(true);
+        setLoading(true);
         setTimeout(() => {
-
+            setLoading(false);
             setStatusText("Interview passed successfully. You can download the offer letter.");
             setStatus(true);
             setUnconditional(false);
@@ -219,7 +220,11 @@ const ConditionalOfferLetter: React.FC = () => {
                     )}
 
                 </IonGrid>
-
+                <IonLoading
+                    isOpen={loading}
+                    message={'Please wait...'}
+                    spinner="crescent"
+                />
             </IonContent>
         </IonPage>
     )

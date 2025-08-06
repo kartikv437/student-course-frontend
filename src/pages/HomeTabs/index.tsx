@@ -41,7 +41,7 @@ const HomeTabs: React.FC = () => {
                 <Route path="/home/programs/bachelor" component={Bachelor} exact />
                 <Route path="/home/programs/masters" component={Masters} exact />
                 <Route path="/home/contact-us" component={ContactUs} exact />
-                <Route path="/blogs" component={Blogs} exact />
+                <Route path="/home/blogs" component={Blogs} exact />
 
                 <Redirect exact from="/home" to="/home/homePage" />
             </IonRouterOutlet>

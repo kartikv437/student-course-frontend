@@ -34,7 +34,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isDarkMode, toggleDarkMode }) => {
                         <IonItem routerLink="/home" routerDirection="root">Home</IonItem>
                         <IonItem routerLink="/home/programs" routerDirection="root">Programs</IonItem>
                         <IonItem routerLink="/admission" routerDirection="root">Admission</IonItem>
-                        <IonItem routerLink="/blogs" routerDirection="root">Blogs</IonItem>
+                        <IonItem routerLink="/home/blogs" routerDirection="root">Blogs</IonItem>
                         <IonItem lines="none">
                             <IonLabel>Mode</IonLabel>
                             <IonToggle

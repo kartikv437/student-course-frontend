@@ -1,6 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIcon, IonItem, IonLabel, IonList, IonPage } from '@ionic/react';
 import './ContactUs.css';
 import Header from '../../components/Header';
+import { callOutline, locationOutline, mailOutline } from 'ionicons/icons';
 const ContactUs: React.FC = () => {
     return (
         <IonPage>
@@ -19,15 +20,15 @@ const ContactUs: React.FC = () => {
 
                         <IonList>
                             <IonItem>
-                                <IonIcon name="mail-outline" slot="start"></IonIcon>
+                                <IonIcon icon={mailOutline} slot="start"></IonIcon>
                                 <IonLabel>Email<br /><small>info&#64;geduservices.com</small></IonLabel>
                             </IonItem>
                             <IonItem>
-                                <IonIcon name="call-outline" slot="start"></IonIcon>
+                                <IonIcon icon={callOutline} slot="start"></IonIcon>
                                 <IonLabel>Call Us<br /><small>(0044) 112 365 489</small></IonLabel>
                             </IonItem>
                             <IonItem>
-                                <IonIcon name="location-outline" slot="start"></IonIcon>
+                                <IonIcon icon={locationOutline} slot="start"></IonIcon>
                                 <IonLabel>
                                     Head Office<br />
                                     <small>891 Greenford Rd, Greenford UB6 0HE, United Kingdom</small>
