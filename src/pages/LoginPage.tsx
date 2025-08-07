@@ -88,7 +88,7 @@ const LoginPage: React.FC = () => {
         <IonList>
           <IonItem>
             <IonLabel position="stacked">Email</IonLabel>
-            <IonInput
+            <IonInput style={{ marginTop: '5px' }}
               type="email"
               value={email}
               onIonChange={(e) => setEmail(e.detail.value!)}
@@ -96,7 +96,7 @@ const LoginPage: React.FC = () => {
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Password</IonLabel>
-            <IonInput
+            <IonInput style={{ marginTop: '5px' }}
               type="password"
               value={password}
               ref={passRef}
@@ -105,7 +105,7 @@ const LoginPage: React.FC = () => {
           </IonItem>
         </IonList>
 
-        <IonButton expand="block" onClick={onSubmit} className="ion-margin-top">
+        <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={onSubmit} className="ion-margin-top">
           Login
         </IonButton>
 

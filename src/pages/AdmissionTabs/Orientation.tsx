@@ -7,11 +7,11 @@ const Orientation: React.FC = () => {
         <IonPage>
             <Header />
             <IonContent fullscreen className="ion-padding">
-                <IonToolbar color="light">
-                    <h2>Orientation</h2>
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/visa-apply" />
+                        <IonBackButton className="custom-back" defaultHref="/home/visa-apply" />
                     </IonButtons>
+                    <IonTitle><h2 style={{ marginTop: "10px"}}>Orientation</h2></IonTitle>
                 </IonToolbar>
                 <IonItem>
                     <IonLabel>

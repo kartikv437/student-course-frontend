@@ -6,12 +6,12 @@ const AboutUs: React.FC = () => {
         <IonPage>
             <Header />
             <IonContent fullscreen className="ion-padding">
-                <IonToolbar color="light" className="upload-header">
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton  defaultHref="/home/homePage" />
+                        <IonBackButton className="custom-back" defaultHref="/home/homePage" />
                     </IonButtons>
-                    <IonTitle className="upload-title">
-                        <h2>About Us</h2>
+                    <IonTitle>
+                        <h2 style={{ marginTop: "10px"}}>About Us</h2>
                     </IonTitle>
                 </IonToolbar>
                 <IonCardHeader className="page_banner">
@@ -21,8 +21,8 @@ const AboutUs: React.FC = () => {
                         campuses, and vibrant student life.</IonCardSubtitle>
                 </IonCardHeader>
 
-                <IonCard>
-                    <IonCardContent>
+                <IonCard style={{marginRight: "0px", marginLeft: "0px"}}>
+                    <IonCardContent style={{padding: "0px"}}>
                         <IonSegment value="about">
                             <IonSegmentButton className="segment-button" value="about">
                                 <IonLabel className="label-text">About Us</IonLabel>
@@ -69,7 +69,7 @@ const AboutUs: React.FC = () => {
                     </IonCardContent>
                 </IonCard>
 
-                <IonCard className="numbers-card">
+                <IonCard className="numbers-card" style={{marginRight: "0px", marginLeft: "0px"}}>
                     <IonCardHeader>
                         <IonCardTitle className="card_title">Schiller by the numbers</IonCardTitle>
                     </IonCardHeader>
@@ -97,11 +97,11 @@ const AboutUs: React.FC = () => {
                     </IonGrid>
                 </IonCard>
 
-                <IonCard>
+                <IonCard style={{marginRight: "0px", marginLeft: "0px"}}>
                     <IonCardHeader>
                         <IonCardTitle className="card_title">Our Global Presence</IonCardTitle>
                     </IonCardHeader>
-                    <IonCardContent>
+                    <IonCardContent style={{padding: "0px"}}>
                         <IonAccordionGroup>
                             <IonAccordion className="accordion-section" value="campuses">
                                 <IonItem slot="header" className="acc_label">

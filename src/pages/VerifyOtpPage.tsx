@@ -85,7 +85,7 @@ const VerifyOtpPage: React.FC = () => {
         <IonList>
           <IonItem>
             <IonLabel position="stacked">Email</IonLabel>
-            <IonInput
+            <IonInput style={{ marginTop: '5px' }}
               type="email"
               disabled
               value={email}
@@ -93,7 +93,7 @@ const VerifyOtpPage: React.FC = () => {
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">OTP</IonLabel>
-            <IonInput
+            <IonInput style={{ marginTop: '5px' }}
               type="text"
               value={otp}
               ref={otpRef}
@@ -102,7 +102,7 @@ const VerifyOtpPage: React.FC = () => {
           </IonItem>
         </IonList>
 
-        <IonButton expand="block" onClick={onSubmit} className="ion-margin-top">
+        <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={onSubmit} className="ion-margin-top">
           Verify
         </IonButton>
 

@@ -9,8 +9,8 @@ const PaymentSection: React.FC = () => {
     const [submittedSections, setSubmittedSections] = useState<{ [key: string]: boolean }>({});
     const history = useHistory();
 
-    const goToVisaSection=(section:string)=>{
-         if (!submittedSections[section]) {
+    const goToVisaSection = (section: string) => {
+        if (!submittedSections[section]) {
             setCompletedSteps((prev) => prev + 1);
             setSubmittedSections((prev) => ({ ...prev, [section]: true }));
         }
@@ -37,11 +37,13 @@ const PaymentSection: React.FC = () => {
                 </div>
             </div>
             <IonContent fullscreen className="ion-padding top-handling">
-                <IonToolbar>
-                    <IonTitle>Step 3 : Payment</IonTitle>
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/conditional-offer-letter" />
+                        <IonBackButton className="custom-back" defaultHref="/home/conditional-offer-letter" />
                     </IonButtons>
+                    <IonTitle>
+                        <h2 style={{ marginTop: "10px"}}>Step 3 : Payment</h2>
+                    </IonTitle>
                 </IonToolbar>
                 <IonGrid>
                     <IonCard>
@@ -80,8 +82,8 @@ const PaymentSection: React.FC = () => {
                                     </IonItem>
                                 </div>
 
-                                <IonButton expand="block" color="success" className="ion-margin-top" onClick={()=>goToVisaSection('partialPayment')}>
-                                    <IonIcon icon={lockClosedOutline} slot="start" />
+                                <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" className="ion-margin-top" onClick={() => goToVisaSection('partialPayment')}>
+                                    <IonIcon icon={lockClosedOutline} slot="start" color="light"/>
                                     Partial Payment
                                 </IonButton>
                             </div>
@@ -126,8 +128,8 @@ const PaymentSection: React.FC = () => {
                                     </IonItem>
                                 </div>
 
-                                <IonButton expand="block" color="success" className="ion-margin-top" onClick={()=>goToVisaSection('fullPayment')}>
-                                    <IonIcon icon={lockClosedOutline} slot="start" />
+                                <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" className="ion-margin-top" onClick={() => goToVisaSection('fullPayment')}>
+                                    <IonIcon icon={lockClosedOutline} slot="start" color="light" />
                                     Full Payment
                                 </IonButton>
                             </div>

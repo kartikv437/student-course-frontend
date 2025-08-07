@@ -1,5 +1,5 @@
 import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel } from "@ionic/react";
-import { home, person } from "ionicons/icons";
+import { bookOutline, home, homeOutline, newspaperOutline, person } from "ionicons/icons";
 import { Route, Redirect } from "react-router";
 import HomePage from "./HomePage";
 import Events from "./Events";
@@ -48,15 +48,15 @@ const HomeTabs: React.FC = () => {
 
             <IonTabBar slot="bottom">
                 <IonTabButton tab="homePage" href="/home/homePage">
-                    <IonIcon icon={home} />
+                    <IonIcon style={{marginbottom: 0}} icon={homeOutline} color="danger" size="large"/>
                     <IonLabel>Home</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="courses" href="/home/courses">
-                    <IonIcon icon={person} />
+                    <IonIcon style={{marginbottom: 0}} icon={bookOutline} color="danger" size="large"/>
                     <IonLabel>Courses</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="events" href="/home/events">
-                    <IonIcon icon={person} />
+                    <IonIcon style={{marginbottom: 0}} icon={newspaperOutline} color="danger" size="large"/>
                     <IonLabel>Events</IonLabel>
                 </IonTabButton>
             </IonTabBar>

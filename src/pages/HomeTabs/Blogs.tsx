@@ -32,12 +32,12 @@ const Blogs: React.FC = () => {
         <IonPage>
             <Header />
             <IonContent fullscreen className="ion-padding">
-                <IonToolbar color="light" className="upload-header">
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/homePage" />
+                        <IonBackButton className="custom-back" defaultHref="/home/homePage" />
                     </IonButtons>
-                    <IonTitle className="upload-title">
-                        <h2>Blogs</h2>
+                    <IonTitle>
+                        <h2 style={{ marginTop: "10px"}}>Blogs</h2>
                     </IonTitle>
                 </IonToolbar>
                 <IonList className="blog-container">

@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
         {/* Banner Section */}
         <section>
           <img
-            src="/studentBanner.jpg"
+            src="/home-page-banner.jpg"
             alt="Student Banner"
             style={{ width: "100%", borderRadius: "10px" }}
           />
@@ -29,19 +29,19 @@ const HomePage: React.FC = () => {
                     <div className="image-container">
                       <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
                       <IonText className="overlay-text">
-                        <span style={{ color: "white", fontSize: "20px" }}>About Us</span>
+                        <span style={{ color: "white", fontSize: "16px" }}>About Us</span>
                       </IonText>
                     </div>
                   </IonRouterLink>
                 </IonCard>
               </IonCol>
               <IonCol size="12">
-                <IonCard className="ion-text-center" >
+                <IonCard className="ion-text-center">
                   <IonRouterLink routerLink="/home/programs">
                     <div className="image-container">
                       <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
                       <IonText className="overlay-text">
-                        <span style={{ color: "white", fontSize: "20px" }}>Programs</span>
+                        <span style={{ color: "white", fontSize: "16px" }}>Programs</span>
                       </IonText>
                     </div>
                   </IonRouterLink>
@@ -53,7 +53,7 @@ const HomePage: React.FC = () => {
                     <div className="image-container">
                       <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
                       <IonText className="overlay-text">
-                        <span style={{ color: "white", fontSize: "20px" }}>Application Form</span>
+                        <span style={{ color: "white", fontSize: "16px" }}>Application Form</span>
                       </IonText>
                     </div>
                   </IonRouterLink>
@@ -65,7 +65,7 @@ const HomePage: React.FC = () => {
                     <div className="image-container">
                       <img src="/ask-nexus.jpeg" alt="Background" className="background-image" />
                       <IonText className="overlay-text">
-                        <span style={{ color: "white", fontSize: "20px" }}>Contact Us</span>
+                        <span style={{ color: "white", fontSize: "16px" }}>Contact Us</span>
                       </IonText>
                     </div>
                   </IonRouterLink>

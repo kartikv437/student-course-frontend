@@ -1,4 +1,4 @@
-import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonButton, IonGrid, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonList, IonText, IonLoading } from "@ionic/react";
+import { IonPage, IonContent, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonButton, IonGrid, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonList, IonText, IonLoading, IonSpinner } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import Header from "../../components/Header";
@@ -109,12 +109,12 @@ const ConditionalOfferLetter: React.FC = () => {
                 </div>
             </div>
             <IonContent fullscreen className="ion-padding  top-handling">
-                <IonToolbar color="light">
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/applicationForm" />
+                        <IonBackButton className="custom-back" defaultHref="/home/applicationForm" />
                     </IonButtons>
                     <IonTitle>
-                        <h2>Step 2 :Offer Letter</h2>
+                        <h2 style={{ marginTop: "10px"}}>Step 2 :Offer Letter</h2>
                     </IonTitle>
                 </IonToolbar>
 
@@ -126,7 +126,6 @@ const ConditionalOfferLetter: React.FC = () => {
                                 <input type="file" accept=".pdf,.doc,.docx" style={{ padding: "8px 0" }} onChange={handleFileChange} />
                                 Choose File
                             </label>
-
                         </IonItem>
                     )}
 
@@ -145,7 +144,7 @@ const ConditionalOfferLetter: React.FC = () => {
                     )}
                     {!file && !interviewStatus && (
                         <IonItem>
-                            <IonButton expand="block" color="primary" onClick={sendEmail}>
+                            <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={sendEmail}>
                                 Schedule Interview
                             </IonButton>
                         </IonItem>
@@ -158,14 +157,14 @@ const ConditionalOfferLetter: React.FC = () => {
                     )}
                     {status && (
                         <IonItem>
-                            <IonButton expand="block" color="primary" onClick={() => goToPaymentSection('conditional')}>
+                            <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => goToPaymentSection('conditional')}>
                                 View Conditional Offer Letter
                             </IonButton>
                         </IonItem>
                     )}
                     {unconditional && (
                         <IonItem>
-                            <IonButton expand="block" color="secondary" onClick={() => goToPaymentSection('unconditional')}>
+                            <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => goToPaymentSection('unconditional')}>
                                 View Unconditional Offer Letter
                             </IonButton>
                         </IonItem>
@@ -206,11 +205,11 @@ const ConditionalOfferLetter: React.FC = () => {
                                     </IonList>
 
                                     <div className="ion-margin-top ion-text-center">
-                                        <IonButton color="success" expand="block" onClick={downloadOfferLetter}>
+                                        <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={downloadOfferLetter}>
                                             <IonIcon icon={downloadOutline} slot="start" />
                                             Download Offer Letter
                                         </IonButton>
-                                        <IonButton color="danger" expand="block" className="ion-margin-top" onClick={() => goToPaymentSection('payment')}>
+                                        <IonButton color="tertiary" expand="full" fill="solid" size="small" shape="round" className="ion-margin-top" onClick={() => goToPaymentSection('payment')}>
                                             Proceed to Payment
                                         </IonButton>
                                     </div>
@@ -218,8 +217,11 @@ const ConditionalOfferLetter: React.FC = () => {
                             </IonCard>
                         </div>
                     )}
-
                 </IonGrid>
+                    {/* {loading && (
+                        <IonSpinner color="primary" name="crescent" />
+                    )} */}
+                
                 <IonLoading
                     isOpen={loading}
                     message={'Please wait...'}

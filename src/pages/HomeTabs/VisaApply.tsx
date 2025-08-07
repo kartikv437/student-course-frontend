@@ -150,11 +150,11 @@ const VisaApply: React.FC = () => {
                 </div>
             </div>
             <IonContent fullscreen className="ion-padding top-handling">
-                <IonToolbar color="light">
-                    <h2>Step 4 : Visa Verification</h2>
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/payment-section" />
+                        <IonBackButton className="custom-back" defaultHref="/home/payment-section" />
                     </IonButtons>
+                    <IonTitle><h2 style={{ marginTop: "10px"}}>Step 4 : Visa Verification</h2></IonTitle>
                 </IonToolbar>
                 <IonGrid>
                     <IonCard>
@@ -168,20 +168,20 @@ const VisaApply: React.FC = () => {
                                     <IonIcon icon={documentOutline} slot="start" />
                                     <IonLabel>Application Form</IonLabel>
                                 </IonItem>
-                                <IonButton onClick={downloadVisaApplication} color={"secondary"}>
+                                <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={downloadVisaApplication}>
                                     Download Visa Application Form
                                 </IonButton>
                                 <IonItem>
                                     <IonIcon icon={documentOutline} slot="start" />
                                     <IonLabel>Flight Ticket</IonLabel>
                                 </IonItem>
-                                <IonButton onClick={downloadDummyFlightTicket} color={"secondary"}>
+                                <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={downloadDummyFlightTicket}>
                                     Download Flight Ticket
                                 </IonButton>
                             </IonList>
                         </IonCardContent>
                     </IonCard>
-                    <IonButton onClick={() => goToOrientation('visaApplicationForm')}>Submit Application</IonButton>
+                    <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => goToOrientation('visaApplicationForm')}>Submit Application</IonButton>
                 </IonGrid>
 
 
@@ -198,7 +198,7 @@ const VisaApply: React.FC = () => {
                                     <IonIcon icon={documentOutline} slot="start" />
                                     <IonLabel>Bank Statement</IonLabel>
                                 </IonItem>
-                                <IonButton onClick={downloadDummyBankStatement} color={"secondary"}>
+                                <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={downloadDummyBankStatement}>
                                     Download Bank Statement
                                 </IonButton>
 
@@ -206,7 +206,7 @@ const VisaApply: React.FC = () => {
 
                         </IonCardContent>
                     </IonCard>
-                    <IonButton onClick={() => goToOrientation('bankStatement')}>Submit Bank Statement</IonButton>
+                    <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => goToOrientation('bankStatement')}>Submit Bank Statement</IonButton>
                 </IonGrid>
 
 
@@ -225,8 +225,8 @@ const VisaApply: React.FC = () => {
                                     </p>
                                 </IonText>
                             ) : (
-                                <IonButton expand="block" color="tertiary" onClick={handleVerification}>
-                                    <IonIcon icon={shieldCheckmarkOutline} slot="start" />
+                                <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={handleVerification}>
+                                    <IonIcon icon={shieldCheckmarkOutline} slot="start" color="light"/>
                                     Verify Documents
                                 </IonButton>
                             )}
@@ -248,7 +248,7 @@ const VisaApply: React.FC = () => {
                                 <p>Your e-VISA has been issued. You may now proceed to travel preparation.</p>
                             </IonCardContent>
 
-                        <IonButton onClick={() => goToOrientation('orientation')}>Go To Orientation</IonButton>
+                        <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => goToOrientation('orientation')}>Go To Orientation</IonButton>
                         </IonCard>
                     )}
                 </IonGrid>

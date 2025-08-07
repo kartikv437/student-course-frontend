@@ -1,8 +1,8 @@
 .custom-header {
   --background: rgb(0 68 112);
   --border-width: 0.5;
-  --color:white
-  /* --border-color: #309194; */
+  --color:white;
+  --border-color: rgb(0, 48, 81);
 }
 
 .logo-container {

@@ -73,6 +73,9 @@ const App: React.FC = () => {
         <IonSplitPane contentId="main-content">
           <SideMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           <IonRouterOutlet id="main-content">
+
+            {/* With Login */}
+
             <Route path="/" component={SignupPage} />
             <Route path="/signup" component={SignupPage} />
             <Route path="/verify-otp" component={VerifyOtpPage} />
@@ -80,6 +83,13 @@ const App: React.FC = () => {
             <Route path="/home" component={HomeTabs} />
             <Route path="/admission" component={AdmissionTabs} />
             <Redirect exact from="/" to="/signup" />
+
+            {/* Without Login */}
+
+            {/* <Route path="/home" component={HomeTabs} />
+            <Route path="/admission" component={AdmissionTabs} />
+            <Redirect exact from="/" to="/home/homePage" /> */}
+
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

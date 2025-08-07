@@ -1,4 +1,4 @@
-import { IonPage, IonToolbar, IonContent, IonBackButton, IonButtons, IonCard, IonIcon, IonRouterLink } from "@ionic/react";
+import { IonPage, IonToolbar, IonContent, IonBackButton, IonButtons, IonCard, IonIcon, IonRouterLink, IonTitle } from "@ionic/react";
 import Header from "../../components/Header";
 import "./Programs.css";
 import { briefcaseOutline } from "ionicons/icons";
@@ -7,11 +7,11 @@ const Programs: React.FC = () => {
         <IonPage>
             <Header />
             <IonContent fullscreen className="ion-padding">
-                <IonToolbar color="light">
-                    <h2>Programs</h2>
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/homePage" />
+                        <IonBackButton className="custom-back" defaultHref="/home/homePage" />
                     </IonButtons>
+                    <IonTitle><h2 style={{ marginTop: "10px"}}>Programs</h2></IonTitle>
                 </IonToolbar>
                 <div className="comms-docs-container">
 

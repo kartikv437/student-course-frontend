@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuToggle, IonPopover, IonTitle, IonToolbar } from "@ionic/react";
 import './Header.css';
 import '../theme/variables.css';
-import { logOutOutline, menuOutline, personCircle } from "ionicons/icons";
+import { logOutOutline, menuOutline, personCircle, personCircleOutline } from "ionicons/icons";
 import { useAuth } from "../auth/AuthContext";
 import { useHistory } from "react-router";
 import { useState } from "react";
@@ -35,13 +35,13 @@ const Header: React.FC<HeaderProps> = ({ title = 'Student App', showMenu = true 
                 </IonButtons>
                 <IonTitle>{title}</IonTitle>
                 {/* User Icon */}
-                <IonButton slot="end" color="primary" fill="clear"
+                <IonButton slot="end" color="secondary" fill="clear"
                     onClick={(e) => {
                         e.persist();
                         setPopoverEvent(e.nativeEvent);
                         setShowPopover(true);
                     }}>
-                    <IonIcon icon={personCircle} size="large" className="user-icon" />
+                    <IonIcon icon={personCircle} size="large" color="light" className="user-icon" />
                 </IonButton>
 
                 {/* Popover attached to the button via trigger */}
@@ -50,12 +50,16 @@ const Header: React.FC<HeaderProps> = ({ title = 'Student App', showMenu = true 
                     onDidDismiss={() => setShowPopover(false)} >
                     <IonList>
                         <IonItem lines="full">
-                            <IonIcon icon={personCircle} slot="start" />
-                            <IonLabel>{user ? user.email : "Guest"}</IonLabel>
+                            <IonIcon icon={personCircleOutline} slot="start" color="danger" />
+                            <IonTitle>
+                                <h4>{user ? user.email : "Guest"}</h4>
+                            </IonTitle>
                         </IonItem>
-                        <IonItem button onClick={() => handleLogout()}>
-                            <IonIcon icon={logOutOutline} slot="start" />
-                            <IonLabel>Logout</IonLabel>
+                        <IonItem lines="none" button onClick={() => handleLogout()}>
+                            <IonIcon icon={logOutOutline} slot="start" color="danger" />
+                            <IonTitle>
+                                <h4>Logout</h4>
+                            </IonTitle>
                         </IonItem>
                     </IonList>
                 </IonPopover>

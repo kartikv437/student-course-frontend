@@ -11,19 +11,19 @@ const Masters: React.FC = () => {
         <IonPage>
             <Header />
             <IonContent fullscreen className="ion-padding">
-                <IonToolbar color="light" className="upload-header">
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/programs" />
+                        <IonBackButton className="custom-back" defaultHref="/home/programs" />
                     </IonButtons>
-                    <IonTitle className="upload-title">
-                        <h2>Masters</h2>
+                    <IonTitle>
+                        <h2 style={{ marginTop: "10px"}}>Masters</h2>
                     </IonTitle>
                 </IonToolbar>
                 <IonGrid>
                     <IonRow className="program-list">
                         {programs.map((program: any, index: number) => (
                             <IonCol size="12" key={index}>
-                                <IonCard className="program-card">
+                                <IonCard className="program-card" style={{marginRight: "0px", marginLeft: "0px"}}>
                                     <img src={program.image} alt={program.title} />
                                     <IonCardContent>
                                         <h2 className="program-title">{program.title}</h2>

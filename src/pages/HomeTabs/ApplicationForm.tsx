@@ -59,16 +59,16 @@ const ApplicationForm: React.FC = () => {
                 </div>
             </div>
             <IonContent fullscreen className="ion-padding top-handling">
-                <IonToolbar color="light" className="upload-header">
+                <IonToolbar color="light" className="main-heading">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home/homePage" />
+                        <IonBackButton className="custom-back" defaultHref="/home/homePage" />
                     </IonButtons>
-                    <IonTitle className="upload-title">
-                        <h2>How to Apply</h2>
+                    <IonTitle>
+                        <h2 style={{ marginTop: "10px"}}>How to Apply</h2>
                     </IonTitle>
                 </IonToolbar>
 
-                <IonList>
+                {/* <IonList>
                     <IonItem>
                         <IonLabel>
                             <h2>
@@ -124,7 +124,7 @@ const ApplicationForm: React.FC = () => {
                             <p>Welcome to the Schiller community!</p>
                         </IonLabel>
                     </IonItem>
-                </IonList>
+                </IonList> */}
 
                 <IonGrid>
                     <IonTitle>
@@ -132,10 +132,14 @@ const ApplicationForm: React.FC = () => {
                     </IonTitle>
                     <IonItem className="input-item">
                         <IonLabel position="stacked">Full Name*</IonLabel>
-                        <IonInput className="custom-input" />
+                        <IonInput className="custom-input"/>
                     </IonItem>
                     <IonItem className="input-item">
                         <IonLabel position="stacked">Contact Number*</IonLabel>
+                        <IonInput className="custom-input" />
+                    </IonItem>
+                    <IonItem className="input-item">
+                        <IonLabel position="stacked">Email*</IonLabel>
                         <IonInput className="custom-input" />
                     </IonItem>
                     <IonItem className="input-item">
@@ -146,7 +150,7 @@ const ApplicationForm: React.FC = () => {
                         <IonLabel position="stacked">Address*</IonLabel>
                         <IonInput className="custom-input" />
                     </IonItem>
-                    <IonButton onClick={() => submitForm('application')}>Submit</IonButton>
+                    <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => submitForm('application')}>Submit</IonButton>
                 </IonGrid>
 
                 <IonGrid>
@@ -190,7 +194,7 @@ const ApplicationForm: React.FC = () => {
                             </IonItem>
                         ))}
                     </IonList>
-                    <IonButton onClick={() => submitForm('academic')}>Submit</IonButton>
+                    <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => submitForm('academic')}>Submit</IonButton>
                 </IonGrid>
 
                 <IonGrid>
@@ -201,7 +205,7 @@ const ApplicationForm: React.FC = () => {
                         <IonLabel position="stacked">Passport Number*</IonLabel>
                         <IonInput />
                     </IonItem>
-                    <IonButton onClick={() => submitForm('passport')}>Submit</IonButton>
+                    <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => submitForm('passport')}>Submit</IonButton>
                 </IonGrid>
 
                 <IonGrid>
@@ -246,7 +250,7 @@ const ApplicationForm: React.FC = () => {
                             </IonItem>
                         ))}
                     </IonList>
-                    <IonButton onClick={() => submitForm('documents')}>Submit</IonButton>
+                    <IonButton color="secondary" expand="full" fill="solid" size="small" shape="round" onClick={() => submitForm('documents')}>Submit</IonButton>
                 </IonGrid>
 
                 {/* <IonGrid>
